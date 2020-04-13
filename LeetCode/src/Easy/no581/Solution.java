@@ -5,8 +5,6 @@ import java.util.Arrays;
 class Solution {
 	public int findUnsortedSubarray(int[] nums) {
 
-		int answer = 0;
-
 		int[] numz = nums.clone();
 		Arrays.sort(numz);
 
