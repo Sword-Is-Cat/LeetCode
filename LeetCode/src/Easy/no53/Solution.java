@@ -18,7 +18,6 @@ class Solution {
 				max = nums[0];
 			else {
 				max = (max > nums[i]) ? max : nums[i];
-				nums[i] = nums[i - 1] + nums[i];
 			}
 		}
 		return (answer > 0) ? answer : max;
