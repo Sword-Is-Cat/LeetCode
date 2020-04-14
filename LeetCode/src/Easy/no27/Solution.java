@@ -1,3 +1,5 @@
+package Easy.no27;
+
 class Solution {
     public int removeElement(int[] nums, int val) {
         
