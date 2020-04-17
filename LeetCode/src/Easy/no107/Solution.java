@@ -9,7 +9,8 @@ package Easy.no107;
  *     TreeNode(int x) { val = x; }
  * }
  */
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 class Solution {
     
@@ -33,7 +34,7 @@ class Solution {
         if(node==null)
             return;
         
-        if(dummy.size() = i)
+        if(dummy.size() == i)
             dummy.add(new ArrayList<Integer>());
       
         dummy.get(i).add(node.val);
