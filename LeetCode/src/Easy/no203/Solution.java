@@ -5,15 +5,16 @@ class Solution {
 
 		while (head != null && head.val == val)
 			head = head.next;
-		
+
 		ListNode temp = head;
-		
-		while(temp!=null && temp.next!=null) {
-			if(temp.next.val==val)
-				temp.next = temp.next.next;
-			else
-				temp = temp.next;
-		}
+
+		if (temp != null)
+			while (temp.next != null) {
+				if (temp.next.val == val)
+					temp.next = temp.next.next;
+				else
+					temp = temp.next;
+			}
 
 		return head;
 
@@ -25,7 +26,8 @@ class ListNode {
 	int val;
 	ListNode next;
 
-	ListNode() {	}
+	ListNode() {
+	}
 
 	ListNode(int val) {
 		this.val = val;
