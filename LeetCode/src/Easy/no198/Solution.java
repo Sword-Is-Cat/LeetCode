@@ -8,7 +8,7 @@ class Solution {
 			int answer = 0;
 
 			for (int i : nums)
-				answer = answer > i ? answer : i;
+				answer = Math.max(answer, i);
 
 			return answer;
 		}
@@ -19,7 +19,7 @@ class Solution {
 		arr[1] = Math.max(nums[0], nums[1]);
 
 		for (int i = 2; i < arr.length; i++)
-			arr[i] = arr[i - 2] + nums[i] > arr[i - 1] ? arr[i - 2] + nums[i] : arr[i - 1];
+			arr[i] = Math.max(arr[i - 2] + nums[i], arr[i - 1]);
 
 		return arr[arr.length - 1];
 
