@@ -1,4 +1,4 @@
-package Challenge.August1st;
+package Challenge.August1st_1;
 
 class Solution {
     public boolean detectCapitalUse(String word) {
