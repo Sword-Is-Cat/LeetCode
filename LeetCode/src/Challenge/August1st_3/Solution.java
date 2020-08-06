@@ -1,4 +1,4 @@
-package Challenge.August_3;
+package Challenge.August1st_3;
 
 class Solution {
 	public boolean isPowerOfFour(int num) {
