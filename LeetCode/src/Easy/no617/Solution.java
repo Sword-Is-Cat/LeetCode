@@ -4,13 +4,6 @@ class Solution {
 	
 	public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
 
-		TreeNode answer = process(t1, t2);
-		
-		return answer;
-	}
-	
-	TreeNode process(TreeNode t1, TreeNode t2) {
-		
 		TreeNode result;
 		
 		if(t1==null && t2==null)
@@ -20,7 +13,7 @@ class Solution {
 		else if(t1!=null && t2==null)
 			result = t1;
 		else {
-			result = new TreeNode(t1.val+t2.val, process(t1.left, t2.left), process(t1.right, t2.right));
+			result = new TreeNode(t1.val+t2.val, mergeTrees(t1.left, t2.left), mergeTrees(t1.right, t2.right));
 		}
 		
 		return result;
