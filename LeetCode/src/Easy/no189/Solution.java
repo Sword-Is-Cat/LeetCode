@@ -2,7 +2,7 @@ package Easy.no189;
 
 class Solution {
 	public void rotate(int[] nums, int k) {
-		
+
 		k %= nums.length;
 
 		int[] arr = new int[k];
