@@ -16,14 +16,12 @@ class Solution {
     			
     			int dist = dist(arr1, arr2);
     			
-    			if(map.containsKey(dist))
+    			if(map.containsKey(dist)) {
+    				answer += map.get(dist);
     				map.put(dist, map.get(dist)+1);
-    			else
+    			}else
     				map.put(dist,1);
     		}
-    		
-    		for(int i : map.keySet())
-    			answer += combi(map.get(i));
     	}
     	
         return answer*2;
