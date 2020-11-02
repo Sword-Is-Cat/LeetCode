@@ -6,32 +6,30 @@ class Solution {
 
 	public int numIslands(char[][] grid) {
 
-		boolean[][] visit = new boolean[grid.length][grid[0].length];
-
 		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[0].length; j++) {
-				if (grid[i][j] == '1' && !visit[i][j]) {
+			for (int j = 0; j < grid[i].length; j++) {
+
+				if (grid[i][j] == '1') {
 					answer++;
-					visitIsland(i, j, grid, visit);
+					dfs(i, j, grid);
 				}
+				;
 			}
 		}
-
 		return answer;
 	}
 
-	void visitIsland(int i, int j, char[][] grid, boolean[][] visit) {
-
-		try {
-			if (grid[i][j] == '1' && !visit[i][j]) {
-				visit[i][j] = true;
-				visitIsland(i - 1, j, grid, visit);
-				visitIsland(i + 1, j, grid, visit);
-				visitIsland(i, j - 1, grid, visit);
-				visitIsland(i, j + 1, grid, visit);
-			}
-		} catch (Exception e) {
+	void dfs(int i, int j, char[][] grid) {
+		if (i < 0 || j < 0 ||
+				i >= grid.length || j >= grid[i].length || grid[i][j] == '0')
 			return;
+		else {
+			grid[i][j] = '0';
+			dfs(i - 1, j, grid);
+			dfs(i + 1, j, grid);
+			dfs(i, j - 1, grid);
+			dfs(i, j + 1, grid);
 		}
+
 	}
 }
