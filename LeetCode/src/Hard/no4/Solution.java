@@ -27,12 +27,10 @@ class Solution {
 				} else if (index2 == length2) {
 					index1++;
 				} else {
-
 					if (nums1[index1] < nums2[index2])
 						index1++;
 					else
 						index2++;
-
 				}
 			}
 
@@ -54,11 +52,7 @@ class Solution {
 				}
 			}
 
-			System.out.println("no1:" + targetNo1);
-			System.out.println("no2:" + targetNo2);
-
 			return isOdd ? targetNo1 : (targetNo1 + targetNo2) / 2;
 		}
-
 	}
 }
