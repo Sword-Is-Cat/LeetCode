@@ -1,49 +1,40 @@
 package Easy.no205;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 class Solution {
 	public boolean isIsomorphic(String s, String t) {
 
-		char[] arrS = s.toCharArray();
-		int[] noArrS = new int[arrS.length];
-		List<Character> listS = new ArrayList<>();
+		char[] sArr = s.toCharArray();
+		char[] tArr = t.toCharArray();
 
-		for (int i = 0; i < arrS.length; i++) {
-			if (listS.contains(arrS[i]))
-				noArrS[i] = listS.indexOf(arrS[i]);
-			else {
-				listS.add(arrS[i]);
-				noArrS[i] = listS.size() - 1;
+		Map<Character, Integer> sMap = new HashMap<>();
+		Map<Character, Integer> tMap = new HashMap<>();
+
+		boolean result = sArr.length == tArr.length;
+
+		if (result) {
+
+			for (int i = 0; i < sArr.length; i++) {
+
+				if (!sMap.containsKey(sArr[i])) {
+					sMap.put(sArr[i], i);
+				}
+				if (!tMap.containsKey(tArr[i])) {
+					tMap.put(tArr[i], i);
+				}
+
 			}
-		}
 
-		char[] arrT = t.toCharArray();
-		int[] noArrT = new int[arrT.length];
-		List<Character> listT = new ArrayList<>();
-
-		for (int i = 0; i < arrT.length; i++) {
-			if (listT.contains(arrT[i]))
-				noArrT[i] = listT.indexOf(arrT[i]);
-			else {
-				listT.add(arrT[i]);
-				noArrT[i] = listT.size() - 1;
-			}
-		}
-
-		boolean answer = true;
-		
-		if (noArrS.length == noArrT.length) {
-			for (int i = 0; i < noArrS.length; i++) {
-				if(noArrS[i]!=noArrT[i]) {
-					answer = false;
-					break;
+			for (int i = 0; i < sArr.length; i++) {
+				if (sMap.get(sArr[i]) != tMap.get(tArr[i])) {
+					return false;
 				}
 			}
-		} else
-			answer = false;
 
-		return answer;
+		}
+
+		return result;
 	}
 }
