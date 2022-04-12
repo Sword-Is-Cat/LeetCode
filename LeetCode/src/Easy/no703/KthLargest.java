@@ -17,14 +17,10 @@ class KthLargest {
 
 	public int add(int val) {
 
-		if (que.size() < size) {
-			que.add(val);
-		} else {
-			if (que.peek() < val) {
-				que.add(val);
-				que.poll();
-			}
-		}
+		que.add(val);
+		while (que.size() > size)
+			que.poll();
+
 		return que.peek();
 	}
 }
