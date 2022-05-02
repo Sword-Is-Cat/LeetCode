@@ -14,7 +14,7 @@ class Solution {
 			else
 				arr[odd--] = no;
 		}
-		
+
 		return arr;
 
 	}
