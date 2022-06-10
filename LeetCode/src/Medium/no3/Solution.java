@@ -1,62 +1,44 @@
 package Medium.no3;
 
 import java.util.HashMap;
-import java.util.Map;
 
 class Solution {
 	public int lengthOfLongestSubstring(String s) {
 
-		int answer = 0;
 		char[] arr = s.toCharArray();
-		Map<Character, Integer> map = new HashMap<>();
+		int length = 0;
 
-		if (arr.length != 0) {
+		if (arr.length > 0) {
 
-			int i = 0;
-			int j = 1;
-			map.put(arr[0], 1);
+			int from = 0, to = 1;
+			HashMap<Character, Integer> counter = new HashMap<>();
+			for (char ch : arr)
+				counter.put(ch, 0);
+			counter.replace(arr[0], 1);
 
-			while (true) {
-				if (check(map)) {
-					answer = (answer < j - i) ? j - i : answer;
-					if (j == arr.length)
-						break;
-					if (map.containsKey(arr[j])) {
-						map.replace(arr[j], map.get(arr[j]) + 1);
-					} else {
-						map.put(arr[j], 1);
-					}
-					j++;
+			while (to < arr.length) {
+
+				if (isCountUnique(counter)) {
+					length = Math.max(length, to - from);
+					counter.replace(arr[to], counter.get(arr[to]) + 1);
+					to++;
 				} else {
-					map.replace(arr[i], map.get(arr[i]) - 1);
-					i++;
+					counter.replace(arr[from], counter.get(arr[from]) - 1);
+					from++;
 				}
 			}
+			if (isCountUnique(counter))
+				length = Math.max(length, to - from);
 		}
 
-		return answer;
-
+		return length;
 	}
 
-	public boolean check(Map<Character, Integer> map) {
+	boolean isCountUnique(HashMap<Character, Integer> map) {
 
-		boolean flag = true;
-
-		for (Character ch : map.keySet()) {
-			if (map.get(ch) > 1)
-				flag = false;
-		}
-
-		return flag;
-	}
-
-	public static void main(String[] args) {
-
-		String s = "pwwkew";
-
-		Solution sol = new Solution();
-
-		System.out.println(sol.lengthOfLongestSubstring(s));
-
+		for (char key : map.keySet())
+			if (map.get(key) > 1)
+				return false;
+		return true;
 	}
 }
