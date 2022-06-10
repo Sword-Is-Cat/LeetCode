@@ -1,44 +1,24 @@
 package Medium.no3;
 
-import java.util.HashMap;
+import java.util.HashSet;
 
 class Solution {
 	public int lengthOfLongestSubstring(String s) {
 
-		char[] arr = s.toCharArray();
 		int length = 0;
+		int from = 0, to = 0;
+		HashSet<Character> set = new HashSet<>();
 
-		if (arr.length > 0) {
+		while (to < s.length()) {
 
-			int from = 0, to = 1;
-			HashMap<Character, Integer> counter = new HashMap<>();
-			for (char ch : arr)
-				counter.put(ch, 0);
-			counter.replace(arr[0], 1);
-
-			while (to < arr.length) {
-
-				if (isCountUnique(counter)) {
-					length = Math.max(length, to - from);
-					counter.replace(arr[to], counter.get(arr[to]) + 1);
-					to++;
-				} else {
-					counter.replace(arr[from], counter.get(arr[from]) - 1);
-					from++;
-				}
+			if (set.contains(s.charAt(to)))
+				set.remove(s.charAt(from++));
+			else {
+				set.add(s.charAt(to++));
+				length = Math.max(length, set.size());
 			}
-			if (isCountUnique(counter))
-				length = Math.max(length, to - from);
 		}
 
 		return length;
-	}
-
-	boolean isCountUnique(HashMap<Character, Integer> map) {
-
-		for (char key : map.keySet())
-			if (map.get(key) > 1)
-				return false;
-		return true;
 	}
 }
