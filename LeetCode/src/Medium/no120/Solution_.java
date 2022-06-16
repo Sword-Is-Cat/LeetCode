@@ -2,7 +2,7 @@ package Medium.no120;
 
 import java.util.List;
 
-class Solution {
+class Solution_ {
 	public int minimumTotal(List<List<Integer>> triangle) {
 
 		for (int idx = 1; idx < triangle.size(); idx++) {
