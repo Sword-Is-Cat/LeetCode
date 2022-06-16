@@ -1,38 +1,42 @@
 package Medium.no5;
 
 class Solution {
+
+	char[] arr;
+	int cFrom = 0;
+	int cTo = -1;
+
 	public String longestPalindrome(String s) {
 
-		StringBuilder sb = new StringBuilder(s);
-		int length = sb.length();
+		arr = s.toCharArray();
 
-		String answer = "";
+		process(0, 0);
 
-		for (int head = 0; head < length; head++) {
-			for (int tail = length; tail > head; tail--) {
-
-				if (tail - head > answer.length() && sb.charAt(head) == sb.charAt(tail - 1)) {
-
-					String tempStr = sb.substring(head, tail);
-					if (isPalin(tempStr))
-						answer = tempStr;
-
-					System.out.println("check:" + tempStr + ", result:" + answer);
-
-				}
-
-			}
+		for (int i = 1; i < s.length(); i++) {
+			process(i - 1, i);
+			process(i, i);
 		}
 
-		return answer;
+		StringBuilder sb = new StringBuilder();
 
+		while (cFrom <= cTo)
+			sb.append(arr[cFrom++]);
+
+		return sb.toString();
 	}
 
-	public boolean isPalin(String str) {
-		return str.equals(new StringBuilder(str).reverse().toString());
-	}
+	void process(int from, int to) {
 
-	public static void main(String[] args) {
-		System.out.println(new Solution().longestPalindrome("cyyoacmjwjubfkzrrbvquqkwhsxvmytmjvbborrtoiyotobzjmohpadfrvmxuagbdczsjuekjrmcwyaovpiogspbslcppxojgbfxhtsxmecgqjfuvahzpgprscjwwutwoiksegfreortttdotgxbfkisyakejihfjnrdngkwjxeituomuhmeiesctywhryqtjimwjadhhymydlsmcpycfdzrjhstxddvoqprrjufvihjcsoseltpyuaywgiocfodtylluuikkqkbrdxgjhrqiselmwnpdzdmpsvbfimnoulayqgdiavdgeiilayrafxlgxxtoqskmtixhbyjikfmsmxwribfzeffccczwdwukubopsoxliagenzwkbiveiajfirzvngverrbcwqmryvckvhpiioccmaqoxgmbwenyeyhzhliusupmrgmrcvwmdnniipvztmtklihobbekkgeopgwipihadswbqhzyxqsdgekazdtnamwzbitwfwezhhqznipalmomanbyezapgpxtjhudlcsfqondoiojkqadacnhcgwkhaxmttfebqelkjfigglxjfqegxpcawhpihrxydprdgavxjygfhgpcylpvsfcizkfbqzdnmxdgsjcekvrhesykldgptbeasktkasyuevtxrcrxmiylrlclocldmiwhuizhuaiophykxskufgjbmcmzpogpmyerzovzhqusxzrjcwgsdpcienkizutedcwrmowwolekockvyukyvmeidhjvbkoortjbemevrsquwnjoaikhbkycvvcscyamffbjyvkqkyeavtlkxyrrnsmqohyyqxzgtjdavgwpsgpjhqzttukynonbnnkuqfxgaatpilrrxhcqhfyyextrvqzktcrtrsbimuokxqtsbfkrgoiznhiysfhzspkpvrhtewthpbafmzgchqpgfsuiddjkhnwchpleibavgmuivfiorpteflholmnxdwewj"));
+		if (from >= 0 && to < arr.length) {
+
+			if (arr[from] == arr[to]) {
+
+				if (cTo - cFrom < to - from) {
+					cFrom = from;
+					cTo = to;
+				}
+				process(from - 1, to + 1);
+			}
+		}
 	}
 }
