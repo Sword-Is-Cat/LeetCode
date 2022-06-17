@@ -13,7 +13,9 @@ class Solution {
 
 	/**
 	 * @param node
-	 * @return 0 -> pt Node need to be CAM, 1 -> this is CAM, 2 -> one of my childNode is CAM
+	 * @return 0 -> pt Node need to be CAM
+	 * 		 , 1 -> this is CAM
+	 * 		 , 2 -> one of my childNode is CAM
 	 */
 	int process(TreeNode node) {
 
@@ -21,8 +23,7 @@ class Solution {
 
 		if (node != null) {
 
-			status = Math.min(status, process(node.left));
-			status = Math.min(status, process(node.right));
+			status = Math.min(process(node.left), process(node.right));
 
 			status = (status + 1) % 3;
 
