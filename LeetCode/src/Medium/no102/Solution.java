@@ -5,29 +5,25 @@ import java.util.List;
 
 class Solution {
 
-	List<List<Integer>> list;
-
 	public List<List<Integer>> levelOrder(TreeNode root) {
 
-		list = new ArrayList<>();
+		return process(new ArrayList<>(), root, 0);
 
-		process(root, 0);
-
-		return list;
 	}
 
-	void process(TreeNode node, int depth) {
+	List<List<Integer>> process(List<List<Integer>> list, TreeNode node, int depth) {
 
-		if (node == null)
-			return;
+		if (node != null) {
 
-		if (list.size() == depth)
-			list.add(new ArrayList<>());
+			if (list.size() == depth)
+				list.add(new ArrayList<>());
 
-		list.get(depth).add(node.val);
+			list.get(depth).add(node.val);
 
-		process(node.left, depth + 1);
-		process(node.right, depth + 1);
+			process(list, node.left, depth + 1);
+			process(list, node.right, depth + 1);
+		}
 
+		return list;
 	}
 }
