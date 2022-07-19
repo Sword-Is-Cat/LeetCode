@@ -12,12 +12,19 @@ class Solution {
 			list.add(new ArrayList<>());
 
 		for (int row = 0; row < list.size(); row++) {
-			for (int col = 0; col <= row; col++) {
 
-				if (col == 0 || col == row)
-					list.get(row).add(1);
-				else
-					list.get(row).add(list.get(row - 1).get(col - 1) + list.get(row - 1).get(col));
+			for (int col = 0; col <= row; col++) {
+				
+				int value = 0;
+
+				if (col == 0 || col == row) {
+					value = 1;
+				} else {
+					List<Integer> prevList = list.get(row - 1);
+					value = prevList.get(col - 1) + prevList.get(col);
+				}
+				
+				list.get(row).add(value);
 			}
 		}
 		return list;
