@@ -2,38 +2,37 @@ package Medium.no92;
 
 import java.util.Stack;
 
-class Solution {
+class Solution_ {
 	public ListNode reverseBetween(ListNode head, int left, int right) {
 
 		ListNode root = new ListNode();
 		root.next = head;
-		ListNode temp = root;
-		ListNode prev = root;
+
 		Stack<ListNode> stack = new Stack<>();
+		ListNode temp = root, prev = root, next = null;
 
 		int idx = 0;
-
-		while (idx++ < right) {
-
+		while (temp != null) {
 			temp = temp.next;
-
-			if (idx == left - 1)
-				prev = temp;
+			idx++;
 
 			if (left <= idx && idx <= right)
-				stack.push(temp);
+				stack.add(temp);
+
+			if (idx < left && temp != null)
+				prev = temp;
+
+			if (next == null && right < idx)
+				next = temp;
 
 		}
 
-		temp = temp.next;
-
 		while (!stack.isEmpty()) {
-
 			prev.next = stack.pop();
 			prev = prev.next;
 		}
 
-		prev.next = temp;
+		prev.next = next;
 
 		return root.next;
 	}
