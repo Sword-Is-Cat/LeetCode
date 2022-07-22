@@ -1,35 +1,28 @@
 package Medium.no86;
 
-import java.util.ArrayList;
-
 class Solution {
+	
 	public ListNode partition(ListNode head, int x) {
 
-		ArrayList<ListNode> ltList = new ArrayList<>();
-		ArrayList<ListNode> gtList = new ArrayList<>();
+		ListNode lRoot = new ListNode(), lTemp = lRoot;
+		ListNode gRoot = new ListNode(), gTemp = gRoot;
 
 		while (head != null) {
-			if (head.val < x)
-				ltList.add(head);
-			else
-				gtList.add(head);
+
+			if (head.val < x) {
+				lTemp.next = head;
+				lTemp = lTemp.next;
+			} else {
+				gTemp.next = head;
+				gTemp = gTemp.next;
+			}
+
 			head = head.next;
 		}
 
-		ListNode root = new ListNode();
-		ListNode temp = root;
+		lTemp.next = gRoot.next;
+		gTemp.next = null;
 
-		for (ListNode node : ltList) {
-			temp.next = node;
-			temp = temp.next;
-		}
-
-		for (ListNode node : gtList) {
-			temp.next = node;
-			temp = temp.next;
-		}
-
-		temp.next = null;
-		return root.next;
+		return lRoot.next;
 	}
 }
