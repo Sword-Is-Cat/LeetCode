@@ -3,21 +3,18 @@ package Medium.no62;
 class Solution {
 	public int uniquePaths(int m, int n) {
 
-		m--;
-		n--;
+		return combination(--m + --n, Math.min(m, n));
 
-		long head = 1;
-		long tail = 1;
-		int min = Math.min(m, n);
+	}
 
-		for (int i = 0; i < min; i++) {
-			head *= m + n - i;
-			tail *= min - i;
-		}
+	public int combination(int sum, int no) {
 
-		long answer = head / tail;
+		long result = 1;
+		int i = 1;
 
-		return (int) answer;
+		while (i <= no)
+			result = result * sum-- / i++;
 
+		return (int) result;
 	}
 }
