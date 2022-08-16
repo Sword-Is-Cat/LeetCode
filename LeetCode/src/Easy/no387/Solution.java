@@ -9,17 +9,21 @@ class Solution {
 		Set<Character> allSet = new HashSet<>();
 		Set<Character> duplSet = new HashSet<>();
 
-		char[] arr = s.toCharArray();
+		int length = s.length();
 
-		for (char ch : arr) {
+		for (int i = 0; i < length; i++) {
+
+			char ch = s.charAt(i);
+
 			if (!allSet.add(ch))
 				duplSet.add(ch);
+
 		}
 
 		int answer = -1;
 
-		for (int i = 0; i < arr.length; i++) {
-			if (!duplSet.contains(arr[i])) {
+		for (int i = 0; i < length; i++) {
+			if (!duplSet.contains(s.charAt(i))) {
 				answer = i;
 				break;
 			}
