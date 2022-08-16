@@ -2,45 +2,34 @@ package Easy.no235;
 
 class Solution {
 
-	TreeNode answer;
-	int pp;
-	int qq;
-
 	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
-		pp = p.val;
-		qq = q.val;
-		
-		process(root);
+		if (root == null)
+			return null;
 
-		return answer;
-	}
+		TreeNode result = null;
 
-	int process(TreeNode node) {
+		TreeNode left = lowestCommonAncestor(root.left, p, q);
+		TreeNode right = lowestCommonAncestor(root.right, p, q);
 
-		if (node == null)
-			return 0;
+		if (left == null && right == null) {
 
-		int temp = (node.val == pp || node.val == qq) ? 1 : 0;
+			if (root == p || root == q)
+				result = root;
 
-		temp += process(node.left) + process(node.right);
+		} else if (left != null && right != null) {
 
-		if (temp == 2) {
-			answer = node;
-			return 0;
+			result = root;
+
+		} else {
+
+			result = left == null ? right : left;
+
+			if (root == p || root == q)
+				result = root;
 		}
 
-		return temp;
+		return result;
 	}
 
-}
-
-class TreeNode {
-	int val;
-	TreeNode left;
-	TreeNode right;
-
-	TreeNode(int x) {
-		val = x;
-	}
 }
