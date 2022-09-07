@@ -15,14 +15,11 @@ class Solution {
 
 			if (node.right != null) {
 				sb.append("(");
-				process(sb, node.left);
-				sb.append(")(");
-				process(sb, node.right);
-				sb.append(")");
+				process(sb, node.left).append(")(");
+				process(sb, node.right).append(")");
 			} else if (node.left != null) {
 				sb.append("(");
-				process(sb, node.left);
-				sb.append(")");
+				process(sb, node.left).append(")");
 			}
 
 		}
