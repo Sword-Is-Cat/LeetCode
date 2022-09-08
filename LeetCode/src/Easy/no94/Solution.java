@@ -4,45 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Solution {
+
+	List<Integer> list = new ArrayList<>();
+
 	public List<Integer> inorderTraversal(TreeNode root) {
 
-		List<Integer> list = new ArrayList<>();
-
 		if (root != null) {
-			addValToList(list, root);
+			inorderTraversal(root.left);
+			list.add(root.val);
+			inorderTraversal(root.right);
 		}
+
 		return list;
 
-	}
-
-	public void addValToList(List<Integer> list, TreeNode node) {
-
-		if (node.left != null)
-			addValToList(list, node.left);
-
-		list.add(node.val);
-		
-		if (node.right != null)
-			addValToList(list, node.right);
-
-	}
-}
-
-class TreeNode {
-	int val;
-	TreeNode left;
-	TreeNode right;
-
-	TreeNode() {
-	}
-
-	TreeNode(int val) {
-		this.val = val;
-	}
-
-	TreeNode(int val, TreeNode left, TreeNode right) {
-		this.val = val;
-		this.left = left;
-		this.right = right;
 	}
 }
