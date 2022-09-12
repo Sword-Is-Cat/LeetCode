@@ -1,17 +1,5 @@
 package Easy.no107;
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-import java.util.List;
-import java.util.ArrayList;
-
 //class Solution {
 //    
 //    List<List<Integer>> dummy = new ArrayList<>();
