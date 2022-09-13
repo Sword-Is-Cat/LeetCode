@@ -12,8 +12,6 @@ class Solution {
     		
     		String[] mail = email.split("@");
     		
-    		String id = mail[0];
-    		
     		set.add(mail[0].split("\\+")[0].replace(".", "").concat("@").concat(mail[1]));
     		
     	}
