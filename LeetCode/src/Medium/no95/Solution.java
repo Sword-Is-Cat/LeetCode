@@ -5,17 +5,18 @@ import java.util.List;
 
 class Solution {
 
-	List<TreeNode>[][] cache;
+	Object[][] cache;
 
 	public List<TreeNode> generateTrees(int n) {
 		cache = new List[n + 1][n + 1];
 		return generateTree(1, n);
 	}
 
+	@SuppressWarnings("unchecked")
 	List<TreeNode> generateTree(int min, int max) {
 
 		if (min >= 0 && min < cache.length && max >= 0 && max < cache.length && cache[min][max] != null)
-			return cache[min][max];
+			return (List<TreeNode>)cache[min][max];
 
 		List<TreeNode> list = new ArrayList<>();
 
