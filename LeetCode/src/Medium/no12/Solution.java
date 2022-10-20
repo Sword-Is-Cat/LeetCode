@@ -1,65 +1,56 @@
 package Medium.no12;
 
 class Solution {
-	
-	StringBuilder sb = new StringBuilder();
-	int i;
-	
-    public String intToRoman(int num) {
-    	
-    	i = num;
-    	
-    	process();
-    	
-    	return sb.toString();
-        
-    }
-    
-    public void process() {
-    	
-    	if(i==0)
-    		return;
-    	else if(i>999) {
-    		sb.append("M");
-    		i -= 1000;
-    	}else if(i>899) {
-    		sb.append("CM");
-    		i -= 900;
-    	}else if(i>499) {
-    		sb.append("D");
-    		i -= 500;
-    	}else if(i>399) {
-    		sb.append("CD");
-    		i -= 400;
-    	}else if(i>99) {
-    		sb.append("C");
-    		i -= 100;
-    	}else if(i>89) {
-    		sb.append("XC");
-    		i -= 90;
-    	}else if(i>49) {
-    		sb.append("L");
-    		i -= 50;
-    	}else if(i>39) {
-    		sb.append("XL");
-    		i -= 40;
-    	}else if(i>9) {
-    		sb.append("X");
-    		i -= 10;
-    	}else if(i>8) {
-    		sb.append("IX");
-    		i -= 9;
-    	}else if(i>4) {
-    		sb.append("V");
-    		i -= 5;
-    	}else if(i>3) {
-    		sb.append("IV");
-    		i -= 4;
-    	}else {
-    		sb.append("I");
-    		i -= 1;
-    	}
-    	
-    	process();
-    }
+	public String intToRoman(int num) {
+
+		StringBuilder sb = new StringBuilder();
+
+		while (num > 0) {
+
+			if (num > 999) {
+				sb.append("M");
+				num -= 1000;
+			} else if (num > 899) {
+				sb.append("CM");
+				num -= 900;
+			} else if (num > 499) {
+				sb.append("D");
+				num -= 500;
+			} else if (num > 399) {
+				sb.append("CD");
+				num -= 400;
+			} else if (num > 99) {
+				sb.append("C");
+				num -= 100;
+			} else if (num > 89) {
+				sb.append("XC");
+				num -= 90;
+			} else if (num > 49) {
+				sb.append("L");
+				num -= 50;
+			} else if (num > 39) {
+				sb.append("XL");
+				num -= 40;
+			} else if (num > 9) {
+				sb.append("X");
+				num -= 10;
+			} else if (num > 8) {
+				sb.append("IX");
+				num -= 9;
+			} else if (num > 4) {
+				sb.append("V");
+				num -= 5;
+			} else if (num > 3) {
+				sb.append("IV");
+				num -= 4;
+			} else {
+				sb.append("I");
+				num -= 1;
+			}
+
+		}
+
+		return sb.toString();
+
+	}
 }
