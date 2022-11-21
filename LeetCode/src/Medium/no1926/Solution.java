@@ -29,28 +29,33 @@ class Solution {
 		for (int[] coord : set) {
 
 			int row = coord[0], col = coord[1];
+			int[] temp;
 
-			if (checkVisitable(row + 1, col)) {
-				next.add(new int[] { row + 1, col });
-				if (checkExit(row + 1, col))
+			temp = new int[] { row + 1, col };
+			if (checkVisitable(temp)) {
+				next.add(temp);
+				if (checkExit(temp))
 					return step;
 			}
 
-			if (checkVisitable(row - 1, col)) {
-				next.add(new int[] { row - 1, col });
-				if (checkExit(row - 1, col))
+			temp = new int[] { row - 1, col };
+			if (checkVisitable(temp)) {
+				next.add(temp);
+				if (checkExit(temp))
 					return step;
 			}
 
-			if (checkVisitable(row, col + 1)) {
-				next.add(new int[] { row, col + 1 });
-				if (checkExit(row, col + 1))
+			temp = new int[] { row, col + 1 };
+			if (checkVisitable(temp)) {
+				next.add(temp);
+				if (checkExit(temp))
 					return step;
 			}
 
-			if (checkVisitable(row, col - 1)) {
-				next.add(new int[] { row, col - 1 });
-				if (checkExit(row, col - 1))
+			temp = new int[] { row, col - 1 };
+			if (checkVisitable(temp)) {
+				next.add(temp);
+				if (checkExit(temp))
 					return step;
 			}
 
@@ -59,8 +64,9 @@ class Solution {
 		return bfs(next, step + 1);
 	}
 
-	boolean checkVisitable(int row, int col) {
+	boolean checkVisitable(int[] arr) {
 
+		int row = arr[0], col = arr[1];
 		if (0 <= row && row < maze.length && 0 <= col && col < maze[row].length) {
 			if (maze[row][col] == '.' && !visit[row][col]) {
 				visit[row][col] = true;
@@ -70,7 +76,8 @@ class Solution {
 		return false;
 	}
 
-	boolean checkExit(int row, int col) {
+	boolean checkExit(int[] arr) {
+		int row = arr[0], col = arr[1];
 		return row == 0 || row == maze.length - 1 || col == 0 || col == maze[row].length - 1;
 	}
 }
