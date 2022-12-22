@@ -10,8 +10,8 @@ class Solution {
 
 		Node[] nodes = new Node[n];
 
-		while (--n >= 0)
-			nodes[n] = new Node(n);
+		for (int i = 0; i < n; i++)
+			nodes[i] = new Node(i);
 
 		for (int[] edge : edges) {
 			nodes[edge[0]].addConn(nodes[edge[1]]);
