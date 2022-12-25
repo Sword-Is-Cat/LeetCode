@@ -10,12 +10,9 @@ class Solution {
 			nums[i] += nums[i - 1];
 		}
 
-		System.out.println(Arrays.toString(nums));
-
 		for (int i = 0; i < queries.length; i++) {
 			queries[i] = binarySearch(nums, queries[i]);
 		}
-		System.out.println(Arrays.toString(queries));
 
 		return queries;
 	}
