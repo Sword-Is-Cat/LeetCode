@@ -17,9 +17,9 @@ class Solution {
 
 			arr[chars[i] - 'a']++;
 
-			if (length <= i) {
+			if (length <= i)
 				arr[chars[i - length] - 'a']--;
-			}
+
 			if (query(arr))
 				return true;
 		}
