@@ -2,36 +2,36 @@ package Medium.no1162;
 
 class Solution {
 	public int maxDistance(int[][] grid) {
-		for (int row = 0; row < grid.length; row++) {
-			for (int col = 0; col < grid.length; col++) {
-				if (grid[row][col] == 1) {
-					query(grid, row, col, 1);
-				}
+
+		int length = grid.length, max = length * 2;
+
+		for (int row = 0; row < length; row++) {
+			for (int col = 0; col < length; col++) {
+				if (grid[row][col] == 1)
+					continue;
+				int up = row == 0 ? max : grid[row - 1][col];
+				int le = col == 0 ? max : grid[row][col - 1];
+				grid[row][col] = Math.min(up, le) + 1;
 			}
 		}
 
-		int max = 0;
-		for (int row = 0; row < grid.length; row++) {
-			for (int col = 0; col < grid.length; col++) {
-				max = Math.max(max, grid[row][col]);
+		for (int row = length - 1; row > -1; row--) {
+			for (int col = length - 1; col > -1; col--) {
+				if (grid[row][col] == 1)
+					continue;
+				int dn = row == length - 1 ? max : grid[row + 1][col];
+				int ri = col == length - 1 ? max : grid[row][col + 1];
+				grid[row][col] = Math.min(grid[row][col], Math.min(dn, ri) + 1);
 			}
 		}
 
-		return max - (max == 1 ? 2 : 1);
-
-	}
-
-	protected void query(int[][] grid, int row, int col, int val) {
-		if (row < 0 || col < 0 || row == grid.length || col == grid.length)
-			return;
-
-		if (grid[row][col] == 0 || val == 1 || grid[row][col] > val) {
-
-			grid[row][col] = val;
-			query(grid, row + 1, col, val + 1);
-			query(grid, row - 1, col, val + 1);
-			query(grid, row, col + 1, val + 1);
-			query(grid, row, col - 1, val + 1);
+		int ans = -1;
+		for (int row = 0; row < length; row++) {
+			for (int col = 0; col < length; col++) {
+				ans = Math.max(ans, grid[row][col] - 1);
+			}
 		}
+
+		return ans > max || ans == 0 ? -1 : ans;
 	}
 }
