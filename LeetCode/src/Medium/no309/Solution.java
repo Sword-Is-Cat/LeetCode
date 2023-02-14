@@ -3,9 +3,6 @@ package Medium.no309;
 class Solution {
 	public int maxProfit(int[] prices) {
 
-		if (prices.length < 2)
-			return 0;
-
 		int money = Integer.MIN_VALUE;
 		int[] dp = new int[prices.length];
 
