@@ -5,12 +5,13 @@ import java.util.Collections;
 import java.util.List;
 
 class Solution {
+
+	List<List<Integer>> list;
+
 	public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
 
-		List<List<Integer>> list = new ArrayList<>();
-
-		recursive(list, root, 0);
-
+		list = new ArrayList<>();
+		dfs(root, 0);
 		for (int i = 0; i < list.size(); i++) {
 			if (i % 2 == 1)
 				Collections.reverse(list.get(i));
@@ -19,17 +20,16 @@ class Solution {
 		return list;
 	}
 
-	void recursive(List<List<Integer>> list, TreeNode node, int depth) {
+	void dfs(TreeNode node, int depth) {
 
 		if (node != null) {
-
 			if (list.size() == depth)
 				list.add(new ArrayList<>());
 
 			list.get(depth).add(node.val);
 
-			recursive(list, node.left, depth + 1);
-			recursive(list, node.right, depth + 1);
+			dfs(node.left, depth + 1);
+			dfs(node.right, depth + 1);
 		}
 	}
 }
