@@ -1,19 +1,25 @@
 package Medium.no142;
 
-import java.util.HashSet;
-
 public class Solution {
-
 	public ListNode detectCycle(ListNode head) {
 
-		HashSet<ListNode> set = new HashSet<>();
+		ListNode slow = head, fast = head;
 
-		while (head != null) {
-			if (set.add(head))
-				head = head.next;
-			else
-				return head;
+		while (fast != null && fast.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+			if (fast == slow)
+				break;
 		}
-		return null;
+
+		if (fast == null || fast.next == null)
+			return null;
+
+		while (head != slow) {
+			head = head.next;
+			slow = slow.next;
+		}
+
+		return head;
 	}
 }
