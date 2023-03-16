@@ -1,26 +1,34 @@
 package Medium.no106;
 
-import java.util.Arrays;
+import java.util.HashMap;
 
 class Solution {
 
+	int[] io, po;
+	HashMap<Integer, Integer> ioMap;
+
 	public TreeNode buildTree(int[] inorder, int[] postorder) {
 
-		if (inorder == null || inorder.length == 0)
-			return null;
+		io = inorder;
+		po = postorder;
+		ioMap = new HashMap<>();
+		for (int i = 0; i < io.length; i++)
+			ioMap.put(io[i], i);
+		int length = io.length;
 
-		int length = inorder.length, value = postorder[length - 1], idx = 0;
+		return buildNode(0, length - 1, 0, length - 1);
+	}
 
-		while (idx < length) {
-			if (inorder[idx] == value)
-				break;
-			idx++;
-		}
+	protected TreeNode buildNode(int ios, int ioe, int pos, int poe) {
 
-		TreeNode node = new TreeNode(value);
-		node.left = buildTree(Arrays.copyOfRange(inorder, 0, idx), Arrays.copyOfRange(postorder, 0, idx));
-		node.right = buildTree(Arrays.copyOfRange(inorder, idx + 1, length),
-				Arrays.copyOfRange(postorder, idx, length - 1));
+		TreeNode node = new TreeNode(po[poe]);
+		int index = ioMap.get(node.val);
+
+		if (ios < index)
+			node.left = buildNode(ios, index - 1, pos, pos + index - ios - 1);
+
+		if (index < ioe)
+			node.right = buildNode(index + 1, ioe, pos + index - ios, poe - 1);
 
 		return node;
 	}
