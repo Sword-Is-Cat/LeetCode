@@ -32,9 +32,11 @@ class Solution {
 	private void union(int i1, int i2) {
 		i1 = getUnion(i1);
 		i2 = getUnion(i2);
-		int min = Math.min(i1, i2);
-		uf[i1] = min;
-		uf[i2] = min;
+		if (i1 < i2) {
+			uf[i2] = i1;
+		} else if (i1 > i2) {
+			uf[i1] = i2;
+		}
 	}
 
 	private int getUnion(int no) {
@@ -42,5 +44,4 @@ class Solution {
 			uf[no] = getUnion(uf[no]);
 		return uf[no];
 	}
-
 }
