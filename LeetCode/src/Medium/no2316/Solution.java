@@ -1,7 +1,5 @@
 package Medium.no2316;
 
-import java.util.HashMap;
-
 class Solution {
 
 	int[] uf;
@@ -15,28 +13,18 @@ class Solution {
 		for (int[] edge : edges)
 			setUnion(edge[0], edge[1]);
 
-		HashMap<Integer, Integer> counter = new HashMap<>();
+		long[] cnt = new long[n];
 
-		for (int no = 0; no < n; no++)
-			counter.compute(getUnion(no), (k, v) -> v == null ? 1 : (v + 1));
-
-		int[] cnt = new int[counter.keySet().size()];
-		int idx = 0;
-		for (int key : counter.keySet()) {
-			cnt[idx++] = counter.get(key);
-		}
-
-		long[] sum = new long[cnt.length];
-
-		for (int i = 0; i < cnt.length; i++) {
-			n -= cnt[i];
-			sum[i] = n;
+		for (int i = 0; i < n; i++) {
+			cnt[getUnion(i)]++;
 		}
 
 		long ans = 0;
 
-		for (int i = 0; i < cnt.length; i++)
-			ans += cnt[i] * sum[i];
+		for (int i = 0; 0 < n; i++) {
+			n -= cnt[i];
+			ans += cnt[i] * n;
+		}
 
 		return ans;
 
