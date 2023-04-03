@@ -7,19 +7,15 @@ class Solution {
 
 		Arrays.sort(people);
 
-		int left = 0;
-		int right = people.length - 1;
-
-		int cnt = 0;
+		int left = 0, right = people.length - 1;
 
 		while (left <= right) {
 
-			cnt++;
-
-			if (people[left] + people[right--] <= limit) {
+			if (people[left] + people[right--] <= limit)
 				left++;
-			}
+
 		}
-		return cnt;
+
+		return people.length - right - 1;
 	}
 }
