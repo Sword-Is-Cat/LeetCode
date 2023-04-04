@@ -1,5 +1,7 @@
 package Medium.no2405;
 
+import java.util.Arrays;
+
 class Solution {
 	public int partitionString(String s) {
 
@@ -8,7 +10,7 @@ class Solution {
 
 		for (char ch : s.toCharArray()) {
 			if (visit[ch - 'a']) {
-				visit = new boolean[26];
+				Arrays.fill(visit, false);
 				cnt++;
 			}
 			visit[ch - 'a'] = true;
