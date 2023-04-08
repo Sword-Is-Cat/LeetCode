@@ -1,25 +1,23 @@
 package Medium.no133;
 
-import java.util.HashMap;
-
 class Solution {
 
-	HashMap<Node, Node> nodeMap = new HashMap<>();
+	Node[] array = new Node[101];
 
 	public Node cloneGraph(Node node) {
 
 		if (node == null)
 			return null;
 
-		if (!nodeMap.containsKey(node)) {
+		if (array[node.val] == null) {
 
 			Node newNode = new Node(node.val);
-			nodeMap.put(node, newNode);
+			array[node.val] = newNode;
 
 			for (Node neighbor : node.neighbors) {
 				newNode.neighbors.add(cloneGraph(neighbor));
 			}
 		}
-		return nodeMap.get(node);
+		return array[node.val];
 	}
 }
