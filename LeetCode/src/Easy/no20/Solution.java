@@ -3,31 +3,18 @@ package Easy.no20;
 import java.util.Stack;
 
 class Solution {
-
-	final char[][] pairs = { { '(', ')' }, { '[', ']' }, { '{', '}' } };
-
 	public boolean isValid(String s) {
 
+		char[] arr = s.toCharArray();
 		Stack<Character> stack = new Stack<>();
 
-		for (char ch : s.toCharArray()) {
-			if (stack.isEmpty()) {
-				stack.add(ch);
+		for (char ch : arr) {
+			if (!stack.isEmpty() && (ch - stack.peek() + 1) / 2 == 1) {
+				stack.pop();
 			} else {
-
-				boolean isPopped = false;
-				for (int i = 0; i < 3; i++) {
-					char[] pair = pairs[i];
-					if (stack.peek() == pair[0] && ch == pair[1]) {
-						stack.pop();
-						isPopped = true;
-						break;
-					}
-				}
-				if (!isPopped) stack.add(ch);
+				stack.add(ch);
 			}
 		}
-
 		return stack.isEmpty();
 	}
 }

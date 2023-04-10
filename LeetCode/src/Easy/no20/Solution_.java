@@ -37,7 +37,7 @@ class Solution_ {
 
 		}
 
-		return (stack.size() == 0) ? true : false;
+		return stack.isEmpty();
 
 	}
 }
