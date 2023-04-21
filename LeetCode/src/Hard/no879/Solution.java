@@ -21,17 +21,17 @@ class Solution {
 
 		if (cache[member][index] == null) {
 
-			int[] rst;
+			int[] profitCount;
 
 			if (index == group.length) {
 				// no more crime to do
-				rst = new int[targetProfit + 1];
-				rst[0] = 1;
+				profitCount = new int[targetProfit + 1];
+				profitCount[0] = 1;
 			} else {
 				// available crime exist
 
 				// [1] default profit: expected profits when skip this crime
-				rst = dfs(member, index + 1).clone();
+				profitCount = dfs(member, index + 1).clone();
 
 				// [2] commit this crime
 				// get crime info
@@ -39,16 +39,16 @@ class Solution {
 
 				if (need <= member) {
 					// check member is enough, get expected profits when commit this crime
-					int[] temp = dfs(member - need, index + 1);
+					int[] tempCount = dfs(member - need, index + 1);
 					// calculate
-					for (int prevProfit = 0; prevProfit < temp.length; prevProfit++) {
-						int idx = Math.min(prevProfit + profit, targetProfit);
-						rst[idx] += temp[prevProfit];
-						rst[idx] %= MOD;
+					for (int prevProfit = 0; prevProfit < tempCount.length; prevProfit++) {
+						int resultProfit = Math.min(prevProfit + profit, targetProfit);
+						profitCount[resultProfit] += tempCount[prevProfit];
+						profitCount[resultProfit] %= MOD;
 					}
 				}
 			}
-			cache[member][index] = rst;
+			cache[member][index] = profitCount;
 		}
 		return cache[member][index];
 	}
