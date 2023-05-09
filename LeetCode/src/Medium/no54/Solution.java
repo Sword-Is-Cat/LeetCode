@@ -8,15 +8,13 @@ class Solution {
 
 		List<Integer> list = new ArrayList<>();
 
-		int cnt = matrix.length * matrix[0].length;
+		while (matrix.length > 0) {
 
-		while (list.size() < cnt) {
+			for (int num : matrix[0])
+				list.add(num);
 
-			for(int j = 0 ; j<matrix[0].length ; j++)
-				list.add(matrix[0][j]);
-			
 			matrix = turnArray(matrix);
-			
+
 		}
 
 		return list;
