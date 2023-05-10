@@ -8,10 +8,8 @@ class Solution {
 
 		int[][] grid = new int[n][n];
 
-		int row = 0;
-		int col = -1;
-		int value = 1;
-		int di = 0;
+		int row = 0, col = -1;
+		int value = 1, di = 0;
 
 		while (value <= n * n) {
 
