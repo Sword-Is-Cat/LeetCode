@@ -1,29 +1,35 @@
 package Medium.no785;
 
-import java.util.HashSet;
-import java.util.Set;
-
 class Solution {
+
+	int[] position;
+
 	public boolean isBipartite(int[][] graph) {
 
-		Set<Integer> left = new HashSet<>(), right = new HashSet<>();
+		position = new int[graph.length];
 
-		for (int i = 0; i < graph.length; i++)
-			if (!left.contains(i) && !right.contains(i))
-				dfs(left, right, graph, i);
-
-		left.retainAll(right);
-
-		return left.isEmpty();
+		for (int i = 0; i < graph.length; i++) {
+			if (position[i] == 0) {
+				if (!setValue(graph, i, 1))
+					return false;
+			}
+		}
+		return true;
 	}
 
-	void dfs(Set<Integer> curSet, Set<Integer> nextSet, int[][] graph, int idx) {
+	private boolean setValue(int[][] graph, int idx, int val) {
 
-		if (curSet.add(idx)) {
+		if (position[idx] == 0) {
 
-			for (int no : graph[idx]) {
-				dfs(nextSet, curSet, graph, no);
+			position[idx] = val;
+
+			for (int next : graph[idx]) {
+				if (!setValue(graph, next, val * -1))
+					return false;
 			}
+			return true;
+		} else {
+			return position[idx] == val;
 		}
 	}
 }
