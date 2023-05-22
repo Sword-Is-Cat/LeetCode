@@ -1,51 +1,27 @@
 package Medium.no347;
 
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 class Solution {
 	public int[] topKFrequent(int[] nums, int k) {
 
-		Map<Integer, InstantVO> map = new HashMap<>();
+		HashMap<Integer, int[]> counter = new HashMap<>();
 
 		for (int num : nums) {
-			if (!map.containsKey(num)) {
-				map.put(num, new InstantVO(num));
-			}
-			map.get(num).add();
+			counter.computeIfAbsent(num, v -> new int[] { num, 0 })[1]++;
 		}
 
-		Queue<InstantVO> que = new PriorityQueue<>((a, b) -> b.cnt - a.cnt);
+		int[][] entries = counter.entrySet().stream().map(entry -> entry.getValue()).toArray(int[][]::new);
+		Arrays.sort(entries, (a, b) -> b[1] - a[1]);
 
-		for (int key : map.keySet())
-			que.add(map.get(key));
+		int[] ans = new int[k];
 
-		int[] result = new int[k];
-		int idx = 0;
-
-		while (idx < k) {
-			result[idx++] = que.poll().no;
+		for (int i = 0; i < k; i++) {
+			ans[i] = entries[i][0];
 		}
 
-		return result;
+		return ans;
 
 	}
-}
-
-class InstantVO {
-
-	int no;
-	int cnt;
-
-	InstantVO(int no) {
-		this.no = no;
-		this.cnt = 0;
-	}
-
-	void add() {
-		cnt++;
-	}
-
 }
