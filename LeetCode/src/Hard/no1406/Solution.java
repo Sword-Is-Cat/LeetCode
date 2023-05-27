@@ -12,15 +12,13 @@ class Solution {
 
 		for (int i = dp.length - 1; 0 <= i; i--) {
 
-			int value = 0;
+			int value = Integer.MIN_VALUE;
 
-			if (stoneValue.length <= i + 3) {
-				value = rSums[i];
-			} else {
-
-				for (int len = 1; len <= 3; len++) {
+			for (int len = 1; len <= 3; len++) {
+				if (i + len < dp.length)
 					value = Math.max(value, rSums[i] - dp[i + len]);
-				}
+				else
+					value = Math.max(value, rSums[i]);
 			}
 			dp[i] = value;
 		}
