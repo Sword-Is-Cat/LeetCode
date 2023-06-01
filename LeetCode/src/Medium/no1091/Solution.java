@@ -1,6 +1,6 @@
 package Medium.no1091;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 class Solution {
 
@@ -15,15 +15,13 @@ class Solution {
 		if (grid.length == 1)
 			return dist;
 
-		HashSet<int[]> set = new HashSet<>();
+		ArrayList<int[]> set = new ArrayList<>(), newSet;
 		set.add(new int[] { 0, 0 });
 
-		HashSet<int[]> newSet;
-
-		while (set.size() > 0) {
+		while (!set.isEmpty()) {
 
 			dist++;
-			newSet = new HashSet<>();
+			newSet = new ArrayList<>();
 			for (int[] point : set) {
 
 				for (int[] direct : DIRECTION) {
@@ -32,10 +30,10 @@ class Solution {
 					int col = point[1] + direct[1];
 
 					if (isValid(row, col, grid)) {
-						
+
 						if (row + 1 == grid.length && col + 1 == grid.length)
 							return dist;
-						
+
 						grid[row][col] = 1;
 						newSet.add(new int[] { row, col });
 					}
