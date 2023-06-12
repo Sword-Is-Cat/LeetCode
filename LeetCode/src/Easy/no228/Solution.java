@@ -6,47 +6,41 @@ import java.util.List;
 class Solution {
 	public List<String> summaryRanges(int[] nums) {
 
-		List<String> list = new ArrayList<>();
+		ArrayList<String> list = new ArrayList<>();
 
 		if (nums.length > 0) {
 
-			int val = nums[0];
-			int lastVal = val;
-			StringBuilder sb = new StringBuilder();
-			sb.append(val);
-			String arrow = "->";
+			int start = nums[0], end = nums[0] - 1;
 
-			for (int i = 1; i < nums.length; i++) {
+			for (int i = 0; i < nums.length; i++) {
 
-				if (val + 1 != nums[i]) {
+				int num = nums[i];
 
-					if (lastVal != val) {
-						sb.append(arrow);
-						sb.append(val);
-					}
-
-					list.add(sb.toString());
-					sb = new StringBuilder();
-
-					lastVal = nums[i];
-					sb.append(lastVal);
-
+				if (end + 1 != num) {
+					list.add(stringify(start, end));
+					start = num;
 				}
 
-				val = nums[i];
+				end = num;
+
+				if (i == nums.length - 1) {
+					list.add(stringify(start, end));
+				}
 
 			}
-
-			if (lastVal != val) {
-				sb.append(arrow);
-				sb.append(val);
-			}
-
-			list.add(sb.toString());
-
 		}
 
 		return list;
+	}
+
+	private String stringify(int a, int b) {
+
+		if (a == b) {
+			return Integer.toString(a);
+		} else {
+			return "{0}->{1}".replace("{0}", Integer.toString(a)).replace("{1}", Integer.toString(b));
+		}
 
 	}
+
 }
