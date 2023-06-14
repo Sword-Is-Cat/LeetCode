@@ -1,55 +1,38 @@
 package Easy.no530;
 
-import java.util.ArrayList;
-import java.util.List;
-
 class Solution {
-	
-	List<Integer> list = new ArrayList<>();
-	
+
+	int ans = Integer.MAX_VALUE;
+
 	public int getMinimumDifference(TreeNode root) {
-		
-		nodeToList(root);
-		
-		if(list.size()<2)return 0;
-		
-		int min = Integer.MAX_VALUE;
-		
-		for(int i = 1 ; i<list.size() ; i++) {
-			min = Math.min(min, Math.abs(list.get(i-1)-list.get(i)));
-		}
-		
-		return min;
 
-	}
-	
-	public void nodeToList(TreeNode node) {
-		
-		if(node == null) return;
-		
-		nodeToList(node.left);
-		list.add(node.val);
-		nodeToList(node.right);
-		
-	}
-	
-}
+		dfs(root);
 
-class TreeNode {
-	int val;
-	TreeNode left;
-	TreeNode right;
-
-	TreeNode() {
+		return ans;
 	}
 
-	TreeNode(int val) {
-		this.val = val;
+	private void dfs(TreeNode node) {
+
+		if (node == null)
+			return;
+
+		if (node.left != null)
+			ans = Math.min(ans, node.val - getMaxValue(node.left));
+
+		if (node.right != null)
+			ans = Math.min(ans, getMinValue(node.right) - node.val);
+
+		dfs(node.left);
+		dfs(node.right);
+
 	}
 
-	TreeNode(int val, TreeNode left, TreeNode right) {
-		this.val = val;
-		this.left = left;
-		this.right = right;
+	private int getMinValue(TreeNode node) {
+		return node.left == null ? node.val : getMinValue(node.left);
 	}
+
+	private int getMaxValue(TreeNode node) {
+		return node.right == null ? node.val : getMaxValue(node.right);
+	}
+
 }
