@@ -21,13 +21,11 @@ class Solution {
 				if (node.right != null) que.addLast(node.right);
 			}
 			
-			if(max<sum) {
+			if (max < sum) {
 				max = sum;
 				ans = level;
 			}
-
 		}
-
 		return ans;
 	}
 }
