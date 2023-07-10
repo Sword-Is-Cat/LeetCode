@@ -1,38 +1,35 @@
 package Easy.no111;
 
+import java.util.ArrayDeque;
+
 class Solution {
-
-	int answer = Integer.MAX_VALUE;
-
 	public int minDepth(TreeNode root) {
-		
-		if(root==null)
-			return 0;
 
-		process(root, 1);
+		ArrayDeque<TreeNode> que = new ArrayDeque<>();
+		que.add(root);
 
-		return answer;
-	}
+		int depth = 1;
 
-	void process(TreeNode node, int depth) {
+		while (!que.isEmpty()) {
 
-		if (node == null)
-			return;
-		else if (node.left == null && node.right == null)
-			answer = Math.min(answer, depth);
-		else {
-			process(node.left, depth + 1);
-			process(node.right, depth + 1);
+			int loop = que.size();
+
+			while (loop-- > 0) {
+
+				TreeNode node = que.poll();
+
+				if (node.left == null && node.right == null)
+					return depth;
+				else {
+					if (node.left != null)
+						que.add(node.left);
+					if (node.right != null)
+						que.add(node.right);
+				}
+			}
+			depth++;
 		}
-	}
-}
+		return depth;
 
-class TreeNode {
-	int val;
-	TreeNode left;
-	TreeNode right;
-
-	TreeNode(int x) {
-		val = x;
 	}
 }
