@@ -5,6 +5,9 @@ import java.util.ArrayDeque;
 class Solution {
 	public int minDepth(TreeNode root) {
 
+		if (root == null)
+			return 0;
+
 		ArrayDeque<TreeNode> que = new ArrayDeque<>();
 		que.add(root);
 
