@@ -7,8 +7,6 @@ class Solution {
 	HashMap<Pair, Double> dpMap = new HashMap<>();
 
 	public double soupServings(int n) {
-		if (n > 5000)
-			return 1D;
 		return calcDP(n, n);
 	}
 
@@ -52,5 +50,4 @@ class Solution {
 			return obj instanceof Pair && ((Pair) obj).a == a && ((Pair) obj).b == b;
 		}
 	}
-
 }
