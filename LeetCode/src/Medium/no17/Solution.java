@@ -5,35 +5,47 @@ import java.util.List;
 
 class Solution {
 
-	List<String> answer = new ArrayList<>();
-	char[][] charList = { { 'a', 'b', 'c' }, { 'd', 'e', 'f' }, { 'g', 'h', 'i' }, { 'j', 'k', 'l' }, { 'm', 'n', 'o' },
-			{ 'p', 'q', 'r', 's' }, { 't', 'u', 'v' }, { 'w', 'x', 'y', 'z' } };
-	StringBuilder sb = new StringBuilder();
-	char[] digit;
+	char[][] dic;
 
 	public List<String> letterCombinations(String digits) {
 
-		if (digits.length() != 0) {
+		List<String> list = new ArrayList<>();
+		dic = buildDic();
 
-			digit = digits.toCharArray();
-			process(0, digits.length());
-		}
-		
-		return answer;
+		if (digits.length() > 0)
+			process(list, digits, new char[digits.length()], 0);
+
+		return list;
 
 	}
 
-	public void process(int i, int length) {
+	private void process(List<String> list, String digits, char[] container, int index) {
 
-		if (i == length) {
-			answer.add(sb.toString());
-		} else {
-			for (char ch : charList[digit[i] - 50]) {
-				sb.append(ch);
-				process(i + 1, length);
-				sb.deleteCharAt(i);
-			}
+		if (index == container.length) {
+			list.add(new String(container));
+			return;
 		}
 
+		for (char ch : dic[digits.charAt(index) - '2']) {
+			container[index] = ch;
+			process(list, digits, container, index + 1);
+		}
+
+	}
+
+	private char[][] buildDic() {
+
+		char[][] myDic = new char[8][];
+
+		myDic[0] = new char[] { 'a', 'b', 'c' };
+		myDic[1] = new char[] { 'd', 'e', 'f' };
+		myDic[2] = new char[] { 'g', 'h', 'i' };
+		myDic[3] = new char[] { 'j', 'k', 'l' };
+		myDic[4] = new char[] { 'm', 'n', 'o' };
+		myDic[5] = new char[] { 'p', 'q', 'r', 's' };
+		myDic[6] = new char[] { 't', 'u', 'v' };
+		myDic[7] = new char[] { 'w', 'x', 'y', 'z' };
+
+		return myDic;
 	}
 }
