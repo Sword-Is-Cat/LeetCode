@@ -1,29 +1,23 @@
 package Medium.no63;
 
 class Solution {
-	public int uniquePathsWithObstacles(int[][] grid) {
+	public int uniquePathsWithObstacles(int[][] obstacleGrid) {
 
-		if (grid[0][0] == 1 || grid[grid.length - 1][grid[0].length - 1] == 1)
-			return 0;
+		int row = obstacleGrid.length, col = obstacleGrid[0].length;
 
-		int[][] ways = new int[grid.length][grid[0].length];
-		ways[0][0] = 1;
+		int[][] dp = new int[row][col];
 
-		for (int sum = 1; sum < grid.length + grid[0].length - 1; sum++) {
-
-			for (int row = 0; row < sum + 1; row++) {
-
-				int col = sum - row;
-
-				if (row >= 0 && col >= 0 && row < grid.length && col < grid[0].length && grid[row][col] == 0) {
-
-					if (row > 0)
-						ways[row][col] += ways[row - 1][col];
-					if (col > 0)
-						ways[row][col] += ways[row][col - 1];
-				}
+		for (int r = 0; r < row; r++) {
+			for (int c = 0; c < col; c++) {
+				if (obstacleGrid[r][c] == 1)
+					continue;
+				if (r == 0 && c == 0)
+					dp[r][c] = 1;
+				else
+					dp[r][c] = (r == 0 ? 0 : dp[r - 1][c]) + (c == 0 ? 0 : dp[r][c - 1]);
 			}
 		}
-		return ways[ways.length - 1][ways[0].length - 1];
+
+		return dp[row - 1][col - 1];
 	}
 }
