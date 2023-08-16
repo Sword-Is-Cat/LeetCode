@@ -44,7 +44,7 @@ class Solution {
  */
 class Node {
 	int li, ri, value;
-	Node left, right, parent, maxNode;
+	Node left, right, maxNode;
 
 	Node(int li, int ri, int[] nums) {
 
@@ -57,9 +57,7 @@ class Node {
 		} else {
 			int mid = (li + ri) / 2;
 			left = new Node(li, mid, nums);
-			left.parent = this;
 			right = new Node(mid + 1, ri, nums);
-			right.parent = this;
 		}
 	}
 }
