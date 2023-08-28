@@ -1,36 +1,28 @@
 package Easy.no225;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
 
 class MyStack {
 
-	List<Integer> list;
+	ArrayDeque<Integer> instance;
 
 	public MyStack() {
-
-		list = new ArrayList<>();
+		instance = new ArrayDeque<>();
 	}
 
 	public void push(int x) {
-
-		list.add(x);
+		instance.addLast(x);
 	}
 
 	public int pop() {
-
-		int result = top();
-		list.remove(list.size() - 1);
-		return result;
+		return instance.pollLast();
 	}
 
 	public int top() {
-
-		return list.get(list.size() - 1);
+		return instance.peekLast();
 	}
 
 	public boolean empty() {
-
-		return list.size() == 0;
+		return instance.isEmpty();
 	}
 }
