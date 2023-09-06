@@ -3,52 +3,28 @@ package Medium.no725;
 class Solution {
 	public ListNode[] splitListToParts(ListNode head, int k) {
 
-		ListNode[] answer = new ListNode[k];
+		ListNode[] ans = new ListNode[k];
 
-		ListNode node = head;
-		int cnt = 0;
+		int length = 0, index = 0;
+		ListNode temp = head, prev = null;
 
-		while (node != null) {
-			node = node.next;
-			cnt++;
+		while (temp != null) {
+			length++;
+			temp = temp.next;
 		}
 
-		for (int i = 0; i < k; i++) {
-
-			answer[i] = head;
-
-			int no = i < cnt % k ? cnt / k + 1 : cnt / k;
-
-			while (no > 1) {
-				no--;
+		length += k;
+		while (index < k) {
+			ans[index++] = head;
+			length--;
+			for (int i = 0; i < length / k; i++) {
+				prev = head;
 				head = head.next;
 			}
-			if (head != null) {
-
-				ListNode temp = head.next;
-				head.next = null;
-				head = temp;
-			}
-
+			if (prev != null)
+				prev.next = null;
 		}
 
-		return answer;
-	}
-}
-
-class ListNode {
-	int val;
-	ListNode next;
-
-	ListNode() {
-	}
-
-	ListNode(int val) {
-		this.val = val;
-	}
-
-	ListNode(int val, ListNode next) {
-		this.val = val;
-		this.next = next;
+		return ans;
 	}
 }
