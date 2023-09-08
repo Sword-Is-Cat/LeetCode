@@ -6,27 +6,22 @@ import java.util.List;
 class Solution {
 	public List<List<Integer>> generate(int numRows) {
 
-		List<List<Integer>> list = new ArrayList<>();
+		List<List<Integer>> ans = new ArrayList<>();
+		List<Integer> curr = null, prev = null;
 
-		while (numRows-- > 0)
-			list.add(new ArrayList<>());
-
-		for (int row = 0; row < list.size(); row++) {
-
+		for (int row = 0; row < numRows; row++) {
+			curr = new ArrayList<>();
 			for (int col = 0; col <= row; col++) {
-				
-				int value = 0;
-
 				if (col == 0 || col == row) {
-					value = 1;
+					curr.add(1);
 				} else {
-					List<Integer> prevList = list.get(row - 1);
-					value = prevList.get(col - 1) + prevList.get(col);
+					curr.add(prev.get(col - 1) + prev.get(col));
 				}
-				
-				list.get(row).add(value);
 			}
+			prev = curr;
+			ans.add(curr);
 		}
-		return list;
+
+		return ans;
 	}
 }
