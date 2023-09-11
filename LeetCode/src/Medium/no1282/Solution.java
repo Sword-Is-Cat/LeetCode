@@ -15,16 +15,12 @@ class Solution {
 
 			int size = groupSizes[idx];
 
-			if (!map.containsKey(size)) {
+			if (!map.containsKey(size) || map.get(size).size() == size) {
 				map.put(size, new ArrayList<>());
 				ans.add(map.get(size));
 			}
 
 			map.get(size).add(idx);
-
-			if (map.get(size).size() == size) {
-				map.remove(size);
-			}
 
 		}
 
