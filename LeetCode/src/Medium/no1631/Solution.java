@@ -1,53 +1,41 @@
 package Medium.no1631;
 
+import java.util.PriorityQueue;
+
 class Solution {
-
-	int[][] grid;
-
 	public int minimumEffortPath(int[][] heights) {
 
-		grid = heights;
+		int[][] dir = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
 
-		int left = -1, right = 1000000;
+		int rowMax = heights.length, colMax = heights[0].length;
+		boolean[][] visit = new boolean[rowMax][colMax];
 
-		while (left + 1 < right) {
-			int mid = (left + right) / 2;
+		PriorityQueue<int[]> que = new PriorityQueue<>((a, b) -> a[2] - b[2]);
+		que.add(new int[] { 0, 0, 0 });
+		int effort = 0;
 
-			if (possibleEffort(mid))
-				right = mid;
-			else
-				left = mid;
+		while (!que.isEmpty()) {
 
+			int[] next = que.poll();
+			int row = next[0], col = next[1], eff = next[2];
+
+			if (!visit[row][col]) {
+
+				visit[row][col] = true;
+				effort = Math.max(effort, eff);
+
+				if (row + 1 == rowMax && col + 1 == colMax)
+					return effort;
+
+				for (int d = 0; d < dir.length; d++) {
+					int nRow = row + dir[d][0], nCol = col + dir[d][1];
+					if (0 <= nRow && nRow < rowMax && 0 <= nCol && nCol < colMax && !visit[nRow][nCol]) {
+						que.add(new int[] { nRow, nCol, Math.abs(heights[nRow][nCol] - heights[row][col]) });
+					}
+				}
+
+			}
 		}
-
-		return right;
-	}
-
-	boolean possibleEffort(int effort) {
-
-		boolean[][] psbArr = new boolean[grid.length][grid[0].length];
-
-		visit(psbArr, 0, 0, effort);
-
-		return psbArr[psbArr.length - 1][psbArr[0].length - 1];
-	}
-
-	void visit(boolean[][] psbArr, int row, int col, int effort) {
-
-		psbArr[row][col] = true;
-		int height = grid[row][col];
-
-		if (row > 0 && !psbArr[row - 1][col] && effort >= Math.abs(height - grid[row - 1][col]))
-			visit(psbArr, row - 1, col, effort);
-
-		if (col > 0 && !psbArr[row][col - 1] && effort >= Math.abs(height - grid[row][col - 1]))
-			visit(psbArr, row, col - 1, effort);
-
-		if (row + 1 < grid.length && !psbArr[row + 1][col] && effort >= Math.abs(height - grid[row + 1][col]))
-			visit(psbArr, row + 1, col, effort);
-
-		if (col + 1 < grid[0].length && !psbArr[row][col + 1] && effort >= Math.abs(height - grid[row][col + 1]))
-			visit(psbArr, row, col + 1, effort);
-
+		return -1;
 	}
 }
