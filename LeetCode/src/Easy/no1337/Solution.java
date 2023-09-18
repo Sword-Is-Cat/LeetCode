@@ -1,37 +1,31 @@
 package Easy.no1337;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.Arrays;
 
 class Solution {
 	public int[] kWeakestRows(int[][] mat, int k) {
 
-		Queue<VO> que = new PriorityQueue<>((a, b) -> a.sum == b.sum ? a.index - b.index : a.sum - b.sum);
-		for (int i = 0; i < mat.length; i++)
-			que.add(new VO(i, mat[i]));
+		int[][] arr = new int[mat.length][2]; // [[sum, index]]
 
-		int[] result = new int[k];
-		int index = 0;
-
-		while (!que.isEmpty() && index < k) {
-			result[index++] = que.poll().index;
+		for (int i = 0; i < mat.length; i++) {
+			arr[i][0] = sumOfIntArr(mat[i]);
+			arr[i][1] = i;
 		}
 
+		Arrays.sort(arr, (a, b) -> a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
+
+		int[] ans = new int[k];
+		for (int i = 0; i < ans.length; i++) {
+			ans[i] = arr[i][1];
+		}
+
+		return ans;
+	}
+
+	private int sumOfIntArr(int[] arr) {
+		int result = 0;
+		for (int num : arr)
+			result += num;
 		return result;
-
 	}
-}
-
-class VO {
-
-	int index;
-	int sum;
-
-	VO(int index, int[] arr) {
-		this.index = index;
-		this.sum = 0;
-		for (int no : arr)
-			sum += no;
-	}
-
 }
