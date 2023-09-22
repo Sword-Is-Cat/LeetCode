@@ -2,29 +2,11 @@ package Easy.no392;
 
 class Solution {
 	public boolean isSubsequence(String s, String t) {
-
-		if (s.length() == 0)
-			return true;
-
-		boolean answer = false;
-
-		char[] sArr = s.toCharArray();
-		char[] tArr = t.replaceAll("[^" + s + "]", "").toCharArray();
-
-		int i = 0;
-
-		for (char ch : tArr) {
-
-			if (sArr[i] == ch)
-				i++;
-
-			if (i == sArr.length) {
-				answer = true;
-				break;
-			}
+		int si = 0, ti = 0;
+		while (si < s.length() && ti < t.length()) {
+			if (s.charAt(si) == t.charAt(ti++))
+				si++;
 		}
-
-		return answer;
-
+		return si == s.length();
 	}
 }
