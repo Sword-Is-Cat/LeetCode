@@ -6,47 +6,38 @@ import java.util.HashMap;
 class Solution {
 	public int longestStrChain(String[] words) {
 
-		HashMap<String, Integer> points = new HashMap<>();
-		Arrays.sort(words, (a, b) -> a.length() - b.length());
+		int[] chains = new int[words.length];
+		HashMap<String, Integer> indexMap = new HashMap<>();
+
+		Arrays.sort(words, (a, b) -> Integer.compare(a.length(), b.length()));
 
 		int ans = 0;
 
-		for (String word : words) {
+		for (int i = 0; i < words.length; i++) {
 
-			int point = 0;
+			String word = words[i];
+			indexMap.put(word, i);
 
-			for (String pred : getPredecessors(word)) {
-				if (points.containsKey(pred))
-					point = Math.max(point, points.get(pred));
+			int chain = 0;
+
+			for (String predecessor : getPredecessors(word)) {
+				if (indexMap.containsKey(predecessor)) {
+					chain = Math.max(chain, chains[indexMap.get(predecessor)]);
+				}
 			}
-
-			point++;
-
-			points.put(word, point);
-			ans = Math.max(ans, point);
-
+			chain++;
+			chains[i] = chain;
+			ans = Math.max(ans, chain);
 		}
 
 		return ans;
 	}
 
-	public String[] getPredecessors(String str) {
-
-		int length = str.length();
-		String[] result = new String[length];
-
-		for (int i = 0; i < length; i++) {
-
-			if (i == 0)
-				result[i] = str.substring(1);
-			else if (i + 1 == length)
-				result[i] = str.substring(0, i);
-			else
-				result[i] = str.substring(0, i) + str.substring(i + 1);
-
+	private String[] getPredecessors(String str) {
+		String[] rst = new String[str.length()];
+		for (int i = 0; i < str.length(); i++) {
+			rst[i] = str.substring(0, i) + str.substring(i + 1);
 		}
-
-		return result;
+		return rst;
 	}
-
 }
