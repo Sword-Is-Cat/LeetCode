@@ -1,37 +1,25 @@
 package Easy.no706;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 class MyHashMap {
 
-	List<Integer> keyList;
-	List<Integer> valList;
+	int[] arr;
 
 	public MyHashMap() {
-		keyList = new ArrayList<>();
-		valList = new ArrayList<>();
+		arr = new int[(int) 1e6 + 1];
+		Arrays.fill(arr, -1);
 	}
 
 	public void put(int key, int value) {
-		if (keyList.contains(key)) {
-			valList.set(keyList.indexOf(key), value);
-		} else {
-			keyList.add(key);
-			valList.add(value);
-		}
+		arr[key] = value;
 	}
 
 	public int get(int key) {
-		int idx = keyList.indexOf(key);
-		return idx == -1 ? -1 : valList.get(idx);
+		return arr[key];
 	}
 
 	public void remove(int key) {
-		int idx = keyList.indexOf(key);
-		if (idx != -1) {
-			key = keyList.remove(idx);
-			key = valList.remove(idx);
-		}
+		arr[key] = -1;
 	}
 }
