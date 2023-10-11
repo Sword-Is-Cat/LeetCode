@@ -1,39 +1,40 @@
 package Hard.no2251;
 
-import java.util.PriorityQueue;
+import java.util.Arrays;
 
 class Solution {
 	public int[] fullBloomFlowers(int[][] flowers, int[] people) {
 
-		PriorityQueue<int[]> unbloom = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-		PriorityQueue<int[]> bloomed = new PriorityQueue<>((a, b) -> a[1] - b[1]);
-		PriorityQueue<int[]> visitor = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+		int[] bloom = new int[flowers.length];
+		int[] wither = new int[flowers.length];
 
-		for (int[] flower : flowers) {
-			unbloom.add(flower);
+		for (int i = 0; i < flowers.length; i++) {
+			bloom[i] = flowers[i][0];
+			wither[i] = flowers[i][1];
 		}
+
+		Arrays.sort(bloom);
+		Arrays.sort(wither);
 
 		for (int i = 0; i < people.length; i++) {
-			visitor.add(new int[] { people[i], i });
-		}
-
-		while (!visitor.isEmpty()) {
-
-			int[] visiting = visitor.poll();
-			int time = visiting[0], idx = visiting[1];
-
-			while (!unbloom.isEmpty() && unbloom.peek()[0] <= time) {
-				bloomed.add(unbloom.poll());
-			}
-
-			while (!bloomed.isEmpty() && bloomed.peek()[1] < time) {
-				bloomed.poll();
-			}
-
-			people[idx] = bloomed.size();
-
+			int time = people[i];
+			int bloomed = binarySearch(bloom, time, true);
+			int withered = binarySearch(wither, time, false);
+			people[i] = bloomed - withered;
 		}
 
 		return people;
+	}
+
+	private int binarySearch(int[] array, int target, boolean includeEQ) {
+		int left = -1, right = array.length;
+		while (left + 1 < right) {
+			int mid = (left + right) / 2;
+			if (array[mid] < target || (includeEQ && array[mid] == target))
+				left = mid;
+			else
+				right = mid;
+		}
+		return left + 1;
 	}
 }
