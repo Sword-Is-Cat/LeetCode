@@ -1,37 +1,35 @@
 package Easy.no844;
 
-import java.util.Stack;
-
 class Solution {
 	public boolean backspaceCompare(String s, String t) {
 
-		char[] sArr = s.toCharArray();
-		char[] tArr = t.toCharArray();
+		int si = s.length() - 1, ti = t.length() - 1;
 
-		Stack<Character> sStack = new Stack<>(), tStack = new Stack<>();
-
-		for (char sCh : sArr) {
-			if (sCh == '#') {
-				if (!sStack.isEmpty())
-					sStack.pop();
-			} else
-				sStack.add(sCh);
+		while (0 <= si && 0 <= ti) {
+			si = findNextIndex(s, si, 0);
+			ti = findNextIndex(t, ti, 0);
+			if (0 <= si && 0 <= ti) {
+				if (s.charAt(si) == t.charAt(ti)) {
+					si--;
+					ti--;
+				} else
+					return false;
+			}
 		}
 
-		for (char tCh : tArr) {
-			if (tCh == '#') {
-				if (!tStack.isEmpty())
-					tStack.pop();
-			} else
-				tStack.add(tCh);
-		}
+		si = findNextIndex(s, si, 0);
+		ti = findNextIndex(t, ti, 0);
 
-		while (!sStack.isEmpty() && !tStack.isEmpty()) {
-			if (sStack.pop() != tStack.pop())
-				return false;
-		}
+		return si == ti;
+	}
 
-		return sStack.isEmpty() && tStack.isEmpty();
-
+	private int findNextIndex(String str, int index, int erase) {
+		if (index < 0)
+			return -1;
+		if (str.charAt(index) == '#')
+			return findNextIndex(str, index - 1, erase + 1);
+		if (erase > 0)
+			return findNextIndex(str, index - 1, erase - 1);
+		return index;
 	}
 }
