@@ -7,7 +7,7 @@ import java.util.List;
 public class NestedIterator implements Iterator<Integer> {
 
 	List<Integer> list;
-	int idx = -1;
+	int idx = 0;
 
 	public NestedIterator(List<NestedInteger> nestedList) {
 
@@ -29,11 +29,11 @@ public class NestedIterator implements Iterator<Integer> {
 
 	@Override
 	public Integer next() {
-		return list.get(++idx);
+		return list.get(idx++);
 	}
 
 	@Override
 	public boolean hasNext() {
-		return idx + 1 < list.size();
+		return idx < list.size();
 	}
 }
