@@ -2,17 +2,12 @@ package Medium.no779;
 
 class Solution {
 	public int kthGrammar(int n, int k) {
-
-		k = k - 1;
-
-		int sum = 0;
-
+		k--;
+		int ans = 0;
 		while (k > 0) {
-			sum += k % 2;
-			k /= 2;
+			ans ^= k % 2;
+			k >>= 1;
 		}
-
-		return sum % 2;
-
+		return ans;
 	}
 }
