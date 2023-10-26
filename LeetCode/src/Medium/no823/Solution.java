@@ -1,38 +1,43 @@
 package Medium.no823;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 class Solution {
-
-	final static int MOD = (int) 1e9 + 7;
-
 	public int numFactoredBinaryTrees(int[] arr) {
 
-		HashMap<Integer, Long> map = new HashMap<>();
-		long ans = 0;
 		Arrays.sort(arr);
+		final int mod = (int) 1e9 + 7;
+
+		long[] result = new long[arr.length];
+		long ans = 0L;
 
 		for (int i = 0; i < arr.length; i++) {
 
 			long value = 1;
-			int num = arr[i];
+			int left = 0, right = i - 1;
 
-			for (int j = 0; j < i; j++) {
+			while (left <= right) {
 
-				int div = arr[j];
-
-				if (num % div == 0 && map.containsKey(num / div)) {
-					value += (map.get(div) * map.get(num / div)) % MOD;
+				long product = 1L * arr[left] * arr[right];
+				if (product < arr[i])
+					left++;
+				else if (product > arr[i])
+					right--;
+				else {
+					if (left == right)
+						value = (value + result[left] * result[right]) % mod;
+					else
+						value = (value + result[left] * result[right] * 2) % mod;
+					left++;
+					right--;
 				}
 
 			}
-
-			map.put(num, value % MOD);
-			ans += map.get(num);
+			result[i] = value;
+			ans += value;
 
 		}
 
-		return (int) (ans % MOD);
+		return (int) (ans % mod);
 	}
 }
