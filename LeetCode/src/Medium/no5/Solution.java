@@ -1,37 +1,28 @@
 package Medium.no5;
 
 class Solution {
-
-	String str;
-	int cFrom = 0;
-	int cTo = 0;
-
 	public String longestPalindrome(String s) {
 
-		str = s;
+		char[] array = s.toCharArray();
+		String palinString = s.substring(0, 1);
 
-		process(0, 0);
-
-		for (int i = 1; i < str.length(); i++) {
-			process(i - 1, i);
-			process(i, i);
-		}
-
-		return str.substring(cFrom, cTo + 1);
-	}
-
-	void process(int from, int to) {
-
-		if (from >= 0 && to < str.length()) {
-
-			if (str.charAt(from) == str.charAt(to)) {
-
-				if (cTo - cFrom < to - from) {
-					cFrom = from;
-					cTo = to;
+		for (int left = 0; left < s.length(); left++) {
+			for (int right = left + palinString.length(); right < s.length(); right++) {
+				if (isPalindrome(array, left, right)) {
+					palinString = s.substring(left, right + 1);
 				}
-				process(from - 1, to + 1);
 			}
 		}
+
+		return palinString;
+	}
+
+	private boolean isPalindrome(char[] array, int left, int right) {
+		while (left <= right) {
+			if (array[left++] != array[right--]) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
