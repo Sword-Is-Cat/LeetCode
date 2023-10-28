@@ -1,6 +1,6 @@
-package Hard.ex1220;
+package Hard.no1220;
 
-class Solution {
+class Solution_ {
 
 	final static long MOD = 1000000007;
 
