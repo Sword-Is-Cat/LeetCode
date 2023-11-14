@@ -16,7 +16,7 @@ class Solution {
 
 		for (int i = 1; i < s.length(); i++) {
 			for (int j = 0; j < 26; j++) {
-				if (0 < counter[i][j] && 0 < counter[s.length()][j] - counter[i + 1][j]) {
+				if (0 < counter[i][j] && counter[i + 1][j] < counter[s.length()][j]) {
 					visit[s.charAt(i) - 'a'][j] = true;
 				}
 			}
