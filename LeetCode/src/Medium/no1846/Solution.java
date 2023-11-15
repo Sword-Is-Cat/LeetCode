@@ -7,9 +7,9 @@ class Solution {
 
 		Arrays.sort(arr);
 		int value = 0;
-		
-		for(int no : arr) {
-			if(value<no)
+
+		for (int no : arr) {
+			if (value < no)
 				value++;
 		}
 
