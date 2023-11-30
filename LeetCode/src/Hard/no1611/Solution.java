@@ -13,7 +13,7 @@ class Solution {
 
 		for (int i = 0; i < length - 1; i++) {
 			if (binaryCharArray[i] != '0') {
-				ans += Math.pow(2, length - i - 1);
+				ans += 1 << length - i - 1;
 				binaryCharArray[i] ^= chngChar;
 				binaryCharArray[i + 1] ^= chngChar;
 			}
