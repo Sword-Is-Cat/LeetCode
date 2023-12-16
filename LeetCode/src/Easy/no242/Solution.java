@@ -1,29 +1,21 @@
 package Easy.no242;
 
-import java.util.Arrays;
-
 class Solution {
 	public boolean isAnagram(String s, String t) {
-		
-		if(s.length()!=t.length())
-			return false;
 
-		char[] arrS = s.toCharArray();
-		char[] arrT = t.toCharArray();
+		int[] counterS = new int[26], counterT = new int[26];
 
-		Arrays.sort(arrS);
-		Arrays.sort(arrT);
+		for (char ch : s.toCharArray())
+			counterS[ch - 'a']++;
+
+		for (char ch : t.toCharArray())
+			counterT[ch - 'a']++;
 
 		boolean answer = true;
 
-		for (int i = 0; i < arrS.length; i++) {
-			if (arrS[i] != arrT[i]) {
-				answer = false;
-				break;
-			}
-		}
+		for (int i = 0; answer && i < 26; i++)
+			answer &= counterS[i] == counterT[i];
 
 		return answer;
-
 	}
 }
