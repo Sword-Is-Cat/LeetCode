@@ -1,33 +1,27 @@
 package Medium.no91;
 
-import java.util.HashMap;
-
 class Solution {
-
-	HashMap<String, Integer> map = new HashMap<>();
-
 	public int numDecodings(String s) {
 
-		if (map.containsKey(s))
-			return map.get(s);
+		char[] arr = s.toCharArray();
+		int[] dp = new int[arr.length + 1];
+		dp[0] = 1;
 
-		if (s.length() == 0)
-			return 1;
+		for (int i = 0; i < arr.length; i++) {
 
-		if (s.charAt(0) == '0')
-			return 0;
+			int curr = arr[i] - '0';
+			if (0 < curr && curr < 10)
+				dp[i + 1] = dp[i];
 
-		if (s.length() == 1)
-			return 1;
+			if (0 < i) {
+				int prev = arr[i - 1] - '0';
+				if (9 < prev * 10 + curr && prev * 10 + curr < 27) {
+					dp[i + 1] += dp[i - 1];
+				}
+			}
 
-		int result = numDecodings(s.substring(1));
-
-		if (s.charAt(0) == '1' || s.charAt(0) == '2' && s.charAt(1) < '7') {
-			result += numDecodings(s.substring(2));
 		}
 
-		map.put(s, result);
-
-		return result;
+		return dp[dp.length - 1];
 	}
 }
