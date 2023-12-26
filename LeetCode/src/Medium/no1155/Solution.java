@@ -1,32 +1,40 @@
 package Medium.no1155;
 
-import java.util.HashMap;
+import java.util.Arrays;
 
 class Solution {
 
-	HashMap<String, Integer> map = new HashMap<>();
-	final int MOD = 1000000007;
+	final int mod = (int) 1e9 + 7;
+	int dp[][], maxDice;
 
 	public int numRollsToTarget(int n, int k, int target) {
 
-		if (n == 0)
-			return target == 0 ? 1 : 0;
+		dp = new int[n + 1][target + 1];
+		for (int i = 1; i < dp.length; i++)
+			Arrays.fill(dp[i], -1);
 
-		String key = n + "/" + k + "/" + target;
+		maxDice = k;
 
-		if (!map.containsKey(key)) {
+		return dp(n, target);
+	}
 
-			long rst = 0;
+	private int dp(int dice, int value) {
 
-			for (int val = 1; val <= k; val++) {
-				rst += numRollsToTarget(n - 1, k, target - val);
+		if (dice == 0 && value == 0)
+			return 1;
+
+		if (dice <= 0 || value <= 0)
+			return 0;
+
+		if (dp[dice][value] == -1) {
+			int count = 0;
+			for (int i = 1; i <= maxDice; i++) {
+				count = (count + dp(dice - 1, value - i)) % mod;
 			}
-
-			map.put(key, (int) (rst % MOD));
-
+			dp[dice][value] = count;
 		}
 
-		return map.get(key);
-
+		return dp[dice][value];
 	}
+
 }
