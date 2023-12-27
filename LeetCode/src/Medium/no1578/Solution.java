@@ -1,29 +1,22 @@
 package Medium.no1578;
 
-import java.util.PriorityQueue;
-
 class Solution {
 	public int minCost(String colors, int[] neededTime) {
 
-		PriorityQueue<Integer> que = new PriorityQueue<>();
-		int answer = 0;
-		que.add(neededTime[0]);
+		char[] balloon = colors.toCharArray();
+		int ans = 0, max = 0;
+		char prev = '0';
 
-		for (int i = 1; i <= neededTime.length; i++) {
-
-			if (i == neededTime.length || colors.charAt(i - 1) != colors.charAt(i)) {
-
-				while (que.size() > 1)
-					answer += que.poll();
-
-				que.clear();
-
+		for (int i = 0; i < balloon.length; i++) {
+			if (balloon[i] == prev) {
+				ans += Math.min(max, neededTime[i]);
+				max = Math.max(max, neededTime[i]);
+			} else {
+				prev = balloon[i];
+				max = neededTime[i];
 			}
-			if (i < neededTime.length)
-				que.add(neededTime[i]);
-
 		}
 
-		return answer;
+		return ans;
 	}
 }
