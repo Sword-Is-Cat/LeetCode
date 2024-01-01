@@ -8,17 +8,13 @@ class Solution {
 		Arrays.sort(g);
 		Arrays.sort(s);
 
-		int i = 0;
-		int j = 0;
+		int ans = 0;
 
-		while (i < g.length && j < s.length) {
-			if (g[i] <= s[j]) {
-				i++;
-				j++;
-			} else
-				j++;
+		for (int i = 0; ans < g.length && i < s.length; i++) {
+			if (g[ans] <= s[i])
+				ans++;
 		}
 
-		return i;
+		return ans;
 	}
 }
