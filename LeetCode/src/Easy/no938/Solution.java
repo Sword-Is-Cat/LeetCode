@@ -6,11 +6,15 @@ class Solution {
 		if (root == null)
 			return 0;
 
-		int result = rangeSumBST(root.left, low, high) + rangeSumBST(root.right, low, high);
+		int result = low <= root.val && root.val <= high ? root.val : 0;
 
-		if (low <= root.val && root.val <= high)
-			result += root.val;
+		if (low <= root.val)
+			result += rangeSumBST(root.left, low, high);
+
+		if (root.val <= high)
+			result += rangeSumBST(root.right, low, high);
 
 		return result;
+
 	}
 }
