@@ -1,36 +1,43 @@
 package Easy.no872;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class Solution {
+
 	public boolean leafSimilar(TreeNode root1, TreeNode root2) {
 
-		ArrayList<Integer> list1 = getLeafSequence(root1);
-		ArrayList<Integer> list2 = getLeafSequence(root2);
+		List<Integer> list1 = getLeafSequence(root1);
+		List<Integer> list2 = getLeafSequence(root2);
 
-		if (list1.size() != list2.size())
-			return false;
+		boolean answer = list1.size() == list2.size();
 
-		for (int idx = 0; idx < list1.size(); idx++) {
-			if (list1.get(idx) != list2.get(idx))
-				return false;
+		for (int idx = 0; answer && idx < list1.size(); idx++) {
+			answer &= list1.get(idx) == list2.get(idx);
 		}
-		return true;
+
+		return answer;
 	}
 
-	ArrayList<Integer> getLeafSequence(TreeNode node) {
-		ArrayList<Integer> list = new ArrayList<>();
-		dfs(list, node);
-		return list;
+	private List<Integer> getLeafSequence(TreeNode root) {
+
+		return dfs(root, new ArrayList<>());
 	}
 
-	void dfs(ArrayList<Integer> list, TreeNode node) {
-		if (node == null)
-			return;
-		if (node.left == null && node.right == null) {
-			list.add(node.val);
+	private List<Integer> dfs(TreeNode node, List<Integer> container) {
+
+		if (node != null) {
+
+			dfs(node.left, container);
+
+			if (node.left == null && node.right == null)
+				container.add(node.val);
+
+			dfs(node.right, container);
+
 		}
-		dfs(list, node.left);
-		dfs(list, node.right);
+
+		return container;
 	}
+
 }
