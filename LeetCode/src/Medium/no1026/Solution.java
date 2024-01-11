@@ -6,22 +6,18 @@ class Solution {
 		return dfs(root, root.val, root.val);
 	}
 
-	int dfs(TreeNode node, int max, int min) {
+	private int dfs(TreeNode node, int max, int min) {
 
 		if (node == null)
-			return 0;
+			return max - min;
 
-		int rst = Math.max(max - node.val, node.val - min);
+		max = Math.max(max, node.val);
+		min = Math.min(min, node.val);
 
-		if (node.val > max)
-			max = node.val;
+		int result = max - min;
 
-		if (node.val < min)
-			min = node.val;
+		result = Math.max(result, Math.max(dfs(node.left, max, min), dfs(node.right, max, min)));
 
-		rst = Math.max(rst, dfs(node.left, max, min));
-		rst = Math.max(rst, dfs(node.right, max, min));
-
-		return rst;
+		return result;
 	}
 }
