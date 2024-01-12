@@ -3,22 +3,21 @@ package Easy.no1704;
 class Solution {
 	public boolean halvesAreAlike(String s) {
 
-		char[] arr = s.toLowerCase().toCharArray();
-		int length = arr.length, cnt = 0;
+		int left = 0, right = s.length() - 1;
+		int cnt = 0;
 
-		for (int i = 0; i < length; i++) {
-			switch (arr[i]) {
-			case 'a':
-			case 'e':
-			case 'i':
-			case 'o':
-			case 'u':
-				if (i < length / 2)
-					cnt++;
-				else
-					cnt--;
-			}
+		while (left < right) {
+			if (isVowel(s.charAt(left++)))
+				cnt++;
+			if (isVowel(s.charAt(right--)))
+				cnt--;
 		}
+
 		return cnt == 0;
+	}
+
+	private boolean isVowel(char ch) {
+		return ch == 'a' || ch == 'A' || ch == 'e' || ch == 'E' || ch == 'i' || ch == 'I' || ch == 'o' || ch == 'O'
+				|| ch == 'u' || ch == 'U';
 	}
 }
