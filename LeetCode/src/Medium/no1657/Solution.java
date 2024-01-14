@@ -3,33 +3,37 @@ package Medium.no1657;
 import java.util.Arrays;
 
 class Solution {
+
 	public boolean closeStrings(String word1, String word2) {
 
-		int[] cnt1 = new int[26], cnt2 = new int[26];
+		if (word1.length() != word2.length())
+			return false;
 
-		for (char ch : word1.toCharArray()) {
-			cnt1[ch - 'a']++;
+		int[] cnt1 = countSpells(word1), cnt2 = countSpells(word2);
+
+		boolean flag = true;
+
+		for (int i = 0; flag && i < 26; i++) {
+			flag &= (cnt1[i] == 0 && cnt2[i] == 0) || (cnt1[i] != 0 && cnt2[i] != 0);
+		}
+		
+		if (flag) {
+			Arrays.sort(cnt1);
+			Arrays.sort(cnt2);
+
+			for (int i = 0; flag && i < 26; i++)
+				flag &= cnt1[i] == cnt2[i];
 		}
 
-		for (char ch : word2.toCharArray()) {
-			cnt2[ch - 'a']++;
+		return flag;
+
+	}
+
+	private int[] countSpells(String str) {
+		int[] count = new int[26];
+		for (int i = 0; i < str.length(); i++) {
+			count[str.charAt(i) - 'a']++;
 		}
-
-		for (int i = 0; i < 26; i++) {
-			if (cnt1[i] != cnt2[i] && cnt1[i] * cnt2[i] == 0) {
-				return false;
-			}
-		}
-
-		Arrays.sort(cnt1);
-		Arrays.sort(cnt2);
-
-		for (int i = 0; i < 26; i++) {
-			if (cnt1[i] != cnt2[i]) {
-				return false;
-			}
-		}
-
-		return true;
+		return count;
 	}
 }
