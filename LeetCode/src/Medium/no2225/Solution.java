@@ -1,40 +1,28 @@
 package Medium.no2225;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 class Solution {
 	public List<List<Integer>> findWinners(int[][] matches) {
 
-		ArrayList<List<Integer>> ans = new ArrayList<>();
+		List<List<Integer>> ans = new ArrayList<>();
 		ans.add(new ArrayList<>());
 		ans.add(new ArrayList<>());
 
-		HashSet<Integer> lose_0 = new HashSet<>();
-		HashSet<Integer> lose_1 = new HashSet<>();
+		boolean[] entry = new boolean[100001];
+		int[] lose = new int[100001];
 
-		for (int i = 0; i < matches.length; i++) {
-			lose_0.add(matches[i][0]);
-			lose_0.add(matches[i][1]);
+		for (int[] match : matches) {
+			entry[match[0]] = true;
+			entry[match[1]] = true;
+			lose[match[1]]++;
 		}
 
-		for (int i = 0; i < matches.length; i++) {
-
-			int loser = matches[i][1];
-
-			if (lose_0.contains(loser)) {
-				lose_0.remove(loser);
-				lose_1.add(loser);
-			} else if (lose_1.contains(loser)) {
-				lose_1.remove(loser);
-			}
+		for (int i = 0; i < 100001; i++) {
+			if (entry[i] && lose[i] < 2)
+				ans.get(lose[i]).add(i);
 		}
-
-		ans.get(0).addAll(lose_0);
-		ans.get(0).sort((a, b) -> a - b);
-		ans.get(1).addAll(lose_1);
-		ans.get(1).sort((a, b) -> a - b);
 
 		return ans;
 	}
