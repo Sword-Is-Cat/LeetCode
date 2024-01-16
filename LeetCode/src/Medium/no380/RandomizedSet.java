@@ -1,34 +1,51 @@
 package Medium.no380;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 class RandomizedSet {
 
-	HashSet<Integer> set;
-	ArrayList<Integer> list;
+	private final Map<Integer, Integer> index = new HashMap<>();
+	private final List<Integer> list = new ArrayList<>();
+	private final Random random = new Random();
 
 	public RandomizedSet() {
-		set = new HashSet<>();
+
 	}
 
 	public boolean insert(int val) {
-		if (list != null)
-			list = null;
-		return set.add(val);
+
+		if (index.containsKey(val))
+			return false;
+
+		index.put(val, list.size());
+		list.add(val);
+
+		return true;
 	}
 
 	public boolean remove(int val) {
-		if (list != null)
-			list = null;
-		return set.remove(val);
+
+		if (!index.containsKey(val))
+			return false;
+
+		int idx = index.get(val), size = list.size(), lastVal = list.get(size - 1);
+		
+		if (idx != size - 1) {
+			list.set(idx, lastVal);
+			index.put(lastVal, idx);
+		}
+
+		index.remove(val, idx);
+		list.remove(size - 1);
+
+		return true;
 	}
 
 	public int getRandom() {
-		if (list == null)
-			list = new ArrayList<>(set);
-
-		return list.get((int) (Math.random() * set.size()));
-
+		return list.get(random.nextInt(list.size()));
 	}
 }
