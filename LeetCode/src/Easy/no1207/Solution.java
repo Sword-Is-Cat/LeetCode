@@ -2,27 +2,23 @@ package Easy.no1207;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map.Entry;
 
 class Solution {
 	public boolean uniqueOccurrences(int[] arr) {
 
 		HashMap<Integer, Integer> counter = new HashMap<>();
-
-		for (int no : arr) {
-			if (!counter.containsKey(no))
-				counter.put(no, 0);
-			counter.put(no, counter.get(no) + 1);
+		for (int num : arr) {
+			counter.put(num, counter.getOrDefault(num, 0) + 1);
 		}
 
-		HashSet<Integer> duplChecker = new HashSet<>();
-		boolean ans = true;
+		HashSet<Integer> duplCheck = new HashSet<>();
 
-		for (int key : counter.keySet()) {
-			if (ans) {
-				ans &= duplChecker.add(counter.get(key));
-			}
+		for (Entry<Integer, Integer> entry : counter.entrySet()) {
+			if (!duplCheck.add(entry.getValue()))
+				return false;
 		}
 
-		return ans;
+		return true;
 	}
 }
