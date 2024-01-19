@@ -1,29 +1,27 @@
 package Medium.no931;
 
 class Solution {
-
 	public int minFallingPathSum(int[][] matrix) {
 
-		int length = matrix.length;
+		int[] prev = null;
 
-		for (int row = 1; row < length; row++) {
-			for (int col = 0; col < length; col++) {
-
-				if (col == 0) {
-					matrix[row][col] += Math.min(matrix[row - 1][col], matrix[row - 1][col + 1]);
-				} else if (col == length - 1) {
-					matrix[row][col] += Math.min(matrix[row - 1][col - 1], matrix[row - 1][col]);
-				} else {
-					matrix[row][col] += Math.min(matrix[row - 1][col - 1],
-							Math.min(matrix[row - 1][col], matrix[row - 1][col + 1]));
+		for (int[] curr : matrix) {
+			if (prev != null) {
+				for (int i = 0; i < curr.length; i++) {
+					int temp = prev[i];
+					if (i > 0)
+						temp = Math.min(temp, prev[i - 1]);
+					if (i < curr.length - 1)
+						temp = Math.min(temp, prev[i + 1]);
+					curr[i] += temp;
 				}
 			}
+			prev = curr;
 		}
 
-		int ans = Integer.MAX_VALUE;
-
-		for (int i = 0; i < length; i++) {
-			ans = Math.min(ans, matrix[length - 1][i]);
+		int ans = prev[0];
+		for (int val : prev) {
+			ans = Math.min(ans, val);
 		}
 
 		return ans;
