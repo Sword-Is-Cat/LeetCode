@@ -1,24 +1,25 @@
 package Easy.no645;
 
-import java.util.HashSet;
-import java.util.Set;
-
 class Solution {
 	public int[] findErrorNums(int[] nums) {
 
-		int[] answer = new int[2];
+		int n = nums.length;
+		int origin = 0;
+		int[] ans = new int[2];
+		boolean[] visit = new boolean[n + 1];
 
-		Set<Integer> set = new HashSet<>();
-
-		for (int i : nums)
-			if (!set.add(i))
-				answer[0] = i;
-
-		for (int i = 1; i <= nums.length; i++)
-			if (set.add(i))
-				answer[1] = i;
-
-		return answer;
+		for (int i = 0; i < nums.length; i++) {
+			int val = nums[i];
+			if (visit[val]) {
+				ans[0] = val;
+			} else {
+				visit[val] = true;
+				origin ^= val;
+			}
+			origin ^= (i + 1);
+		}
+		ans[1] = origin;
+		return ans;
 
 	}
 }
