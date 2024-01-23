@@ -1,61 +1,35 @@
 package Medium.no1239;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 class Solution {
-
-	int answer = 0;
-	List<String> arr;
-
 	public int maxLength(List<String> arr) {
 
-		this.arr = arr;
-		Set<Character> set = new HashSet<>();
-
-		proc(set, 0);
-
-		return answer;
+		return dfs(arr, new int[26], 0);
 	}
 
-	public void proc(Set<Character> set, int index) {
-
-		if (index == arr.size()) {
-			answer = Math.max(answer, set.size());
-			return;
-		}
-
-		proc(new HashSet<Character>(set), index + 1);
-
+	private int dfs(List<String> arr, int[] counter, int index) {
+		if (index == arr.size())
+			return countLength(counter);
 		String str = arr.get(index);
-
-		if (check(set, str)) {
-
-			for (int i = 0; i < str.length(); i++)
-				set.add(str.charAt(i));
-
-			proc(new HashSet<Character>(set), index + 1);
-
-		}
-
-	}
-
-	public boolean check(Set<Character> set, String str) {
-
-		Set<Character> temp = new HashSet<>();
-
+		int result = dfs(arr, counter, index + 1);
 		for (int i = 0; i < str.length(); i++) {
-
-			if (!temp.add(str.charAt(i)))
-				return false;
-
-			if (set.contains(str.charAt(i)))
-				return false;
+			counter[str.charAt(i) - 'a']++;
 		}
-
-		return true;
-
+		result = Math.max(result, dfs(arr, counter, index + 1));
+		for (int i = 0; i < str.length(); i++) {
+			counter[str.charAt(i) - 'a']--;
+		}
+		return result;
 	}
 
+	private int countLength(int[] counter) {
+		int result = 0;
+		for (int val : counter) {
+			if (val > 1)
+				return -1;
+			result += val;
+		}
+		return result;
+	}
 }
