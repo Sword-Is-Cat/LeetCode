@@ -1,36 +1,36 @@
 package Medium.no1457;
 
 class Solution {
+
 	public int pseudoPalindromicPaths(TreeNode root) {
-		return dfs(root, new int[10]);
+		return dfs(root, 0);
 	}
 
-	int dfs(TreeNode node, int[] counter) {
+	private int dfs(TreeNode node, int mask) {
 
-		int rst = 0;
+		if (node == null)
+			return 0;
 
-		if (node != null) {
+		int result = 0;
+		mask ^= 1 << node.val;
 
-			counter[node.val]++;
-			
-			if (node.left == null && node.right == null) {
-				
-				int cntOdd = 0;
-				for (int count : counter) {
-					if (count % 2 == 1)
-						cntOdd++;
-				}
-				rst = cntOdd < 2 ? 1 : 0;
-				
+		if (node.left == null && node.right == null) {
+			if (mask == 0) {
+				result = 1;
 			} else {
-				
-				rst += dfs(node.left, counter);
-				rst += dfs(node.right, counter);
+				for (int i = 1; i < 10; i++) {
+					if ((mask ^ (1 << i)) == 0) {
+						result = 1;
+						break;
+					}
+				}
 			}
-			
-			counter[node.val]--;
+		} else {
+			result = dfs(node.left, mask) + dfs(node.right, mask);
 		}
 
-		return rst;
+		mask ^= 1 << node.val;
+
+		return result;
 	}
 }
