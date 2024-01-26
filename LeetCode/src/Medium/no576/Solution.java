@@ -43,11 +43,9 @@ class Solution {
 	}
 
 	long value(long[][] arr, int row, int col) {
-
-		try {
+		if (0 <= row && 0 <= col && row < arr.length && col < arr[row].length)
 			return arr[row][col];
-		} catch (ArrayIndexOutOfBoundsException e) {
+		else
 			return 0;
-		}
 	}
 }
