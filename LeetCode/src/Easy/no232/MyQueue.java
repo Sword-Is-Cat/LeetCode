@@ -1,36 +1,47 @@
 package Easy.no232;
 
-import java.util.ArrayList;
-import java.util.List;
-
 class MyQueue {
 
-	List<Integer> list;
+	MyNode head, tail;
 
 	public MyQueue() {
 
-		list = new ArrayList<>();
 	}
 
 	public void push(int x) {
-
-		list.add(x);
+		tail = new MyNode(x, tail);
+		if (head == null)
+			head = tail;
 	}
 
 	public int pop() {
-
 		int result = peek();
-		list.remove(0);
+		head = head.next;
 		return result;
 	}
 
 	public int peek() {
-
-		return list.get(0);
+		return head.value;
 	}
 
 	public boolean empty() {
-
-		return list.size() == 0;
+		return head == null;
 	}
+}
+
+class MyNode {
+	int value;
+	MyNode next;
+
+	public MyNode(int value) {
+		this(value, null);
+	}
+
+	public MyNode(int value, MyNode prev) {
+		this.value = value;
+		if (prev != null) {
+			prev.next = this;
+		}
+	}
+
 }
