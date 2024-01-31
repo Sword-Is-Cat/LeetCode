@@ -1,22 +1,24 @@
 package Medium.no739;
 
-import java.util.PriorityQueue;
+import java.util.Stack;
 
 class Solution {
 	public int[] dailyTemperatures(int[] temperatures) {
 
 		int[] ans = new int[temperatures.length];
-		PriorityQueue<int[]> queue = new PriorityQueue<int[]>((a, b) -> a[0] - b[0]);
+		Stack<Integer> stack = new Stack<>();
 
-		for (int idx = 0; idx < ans.length; idx++) {
+		for (int i = 0; i < temperatures.length; i++) {
 
-			while (!queue.isEmpty() && queue.peek()[0] < temperatures[idx]) {
-
-				int i = queue.poll()[1];
-				ans[i] = idx - i;
+			while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
+				int temp = stack.pop();
+				ans[temp] = i - temp;
 			}
-			queue.add(new int[] { temperatures[idx], idx });
+
+			stack.push(i);
 		}
+
 		return ans;
+
 	}
 }
