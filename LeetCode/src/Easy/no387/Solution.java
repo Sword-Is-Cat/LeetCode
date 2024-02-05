@@ -1,35 +1,19 @@
 package Easy.no387;
 
-import java.util.HashSet;
-import java.util.Set;
-
 class Solution {
 	public int firstUniqChar(String s) {
 
-		Set<Character> allSet = new HashSet<>();
-		Set<Character> duplSet = new HashSet<>();
+		int[] counter = new int[26];
 
-		int length = s.length();
-
-		for (int i = 0; i < length; i++) {
-
-			char ch = s.charAt(i);
-
-			if (!allSet.add(ch))
-				duplSet.add(ch);
-
+		for (int i = 0; i < s.length(); i++) {
+			counter[s.charAt(i) - 'a']++;
+		}
+		
+		for (int i = 0; i < s.length(); i++) {
+			if (counter[s.charAt(i) - 'a'] == 1)
+				return i;
 		}
 
-		int answer = -1;
-
-		for (int i = 0; i < length; i++) {
-			if (!duplSet.contains(s.charAt(i))) {
-				answer = i;
-				break;
-			}
-		}
-
-		return answer;
-
+		return -1;
 	}
 }
