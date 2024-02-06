@@ -1,4 +1,4 @@
-package Medium.Solution1637;
+package Medium.no1637;
 
 import java.util.Arrays;
 
