@@ -1,33 +1,20 @@
 package Medium.no279;
 
 class Solution {
-
-	int answer = 0;
-
 	public int numSquares(int n) {
-		
-		answer = n;
 
-		process(n, (int)Math.sqrt(n), 0);
+		int[] dp = new int[n + 1];
+		dp[1] = 1;
 
-		return answer;
-
-	}
-
-	public void process(int no, int sqNo, int cnt) {
-		
-		if (no < 0 || cnt > answer || sqNo == 0) {
-			return;
-		} else if (no == 0) {
-
-			answer = Math.min(answer, cnt);
-			return;
-
-		} else {
-
-			process(no - sqNo * sqNo, sqNo, cnt + 1);
-			process(no, sqNo - 1, cnt);
-
+		for (int num = 2; num <= n; num++) {
+			int min = num;
+			for (int root = 1; root * root <= num; root++) {
+				min = Math.min(min, 1 + dp[num - root * root]);
+			}
+			dp[num] = min;
 		}
+
+		return dp[n];
+
 	}
 }
