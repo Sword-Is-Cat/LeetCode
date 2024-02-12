@@ -1,33 +1,24 @@
 package Easy.no169;
 
-import java.util.Arrays;
+import java.util.HashMap;
 
 class Solution {
 	public int majorityElement(int[] nums) {
 
-		int length = nums.length;
-		int answer = 0;
+		HashMap<Integer, Integer> counter = new HashMap<>();
+		for (int num : nums) {
+			counter.put(num, counter.getOrDefault(num, 0) + 1);
+		}
 
-		Arrays.sort(nums);
+		int value = nums[0], cnt = 0;
 
-		int no = Integer.MAX_VALUE;
-		int count = 0;
-
-		for (int i : nums) {
-			if (i == no)
-				count++;
-			else {
-				no = i;
-				count = 1;
-			}
-
-			if (count > length / 2) {
-				answer = i;
-				break;
+		for (java.util.Map.Entry<Integer, Integer> entry : counter.entrySet()) {
+			if (cnt < entry.getValue()) {
+				value = entry.getKey();
+				cnt = entry.getValue();
 			}
 		}
 
-		return answer;
-
+		return value;
 	}
 }
