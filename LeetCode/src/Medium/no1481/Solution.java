@@ -11,10 +11,7 @@ class Solution {
 			counter.put(num, counter.getOrDefault(num, 0) + 1);
 		}
 
-		PriorityQueue<Integer> que = new PriorityQueue<>();
-		for (int key : counter.keySet()) {
-			que.add(counter.get(key));
-		}
+		PriorityQueue<Integer> que = new PriorityQueue<>(counter.values());
 
 		while (!que.isEmpty() && k >= que.peek()) {
 			k -= que.poll();
