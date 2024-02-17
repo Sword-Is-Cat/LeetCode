@@ -6,16 +6,20 @@ class Solution {
 	public int furthestBuilding(int[] heights, int bricks, int ladders) {
 
 		PriorityQueue<Integer> que = new PriorityQueue<>();
-		int useBricks = 0;
-		int idx = 0;
 
-		while (useBricks <= bricks && ++idx < heights.length) {
+		for (int i = 1; i < heights.length; i++) {
+			if (heights[i] > heights[i - 1]) {
 
-			que.add(heights[idx] - heights[idx - 1]);
-			if (que.size() > ladders)
-				useBricks += Math.max(0, que.poll());
+				que.add(heights[i] - heights[i - 1]);
+				if (que.size() > ladders)
+					bricks -= que.poll();
+
+				if (bricks < 0)
+					return i - 1;
+
+			}
 		}
 
-		return idx - 1;
+		return heights.length - 1;
 	}
 }
