@@ -1,41 +1,20 @@
 package Easy.no543;
 
 class Solution {
-	
-	int diameter = 0;
+
 	public int diameterOfBinaryTree(TreeNode root) {
-
-		if(root==null)return diameter;
-		process(root);
-		return diameter;
-	}
-	
-	public int process(TreeNode node) {
-		
-		if(node==null)return 0;
-		
-		int left = process(node.left);
-		int right = process(node.right);
-		diameter = Math.max(diameter, left+right);
-		return Math.max(left, right)+1;
-	}
-}
-
-class TreeNode {
-	int val;
-	TreeNode left;
-	TreeNode right;
-
-	TreeNode() {
+		return getDepth(root)[1];
 	}
 
-	TreeNode(int val) {
-		this.val = val;
-	}
+	public int[] getDepth(TreeNode node) {
 
-	TreeNode(int val, TreeNode left, TreeNode right) {
-		this.val = val;
-		this.left = left;
-		this.right = right;
+		int[] result = new int[2];
+
+		if (node != null) {
+			int[] left = getDepth(node.left), right = getDepth(node.right);
+			result[0] = Math.max(left[0], right[0]) + 1;
+			result[1] = Math.max(left[0] + right[0], Math.max(left[1], right[1]));
+		}
+		return result;
 	}
 }
