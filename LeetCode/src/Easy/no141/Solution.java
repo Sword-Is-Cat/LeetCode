@@ -1,17 +1,17 @@
 package Easy.no141;
 
 public class Solution {
-    public boolean hasCycle(ListNode head) {
-    	
-        ListNode slow = head, fast = head;
-        
-        while(fast!=null && fast.next!=null) {
-        	slow = slow.next;
-        	fast = fast.next.next;
-        	if(slow==fast)
-        		return true;
-        }
-        
-        return false;
-    }
+	public boolean hasCycle(ListNode head) {
+		ListNode forward = head, backward = head;
+
+		while (forward != null && forward.next != null) {
+			forward = forward.next.next;
+			backward = backward.next;
+
+			if (forward == backward)
+				return true;
+		}
+
+		return false;
+	}
 }
