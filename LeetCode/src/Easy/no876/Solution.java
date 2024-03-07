@@ -3,21 +3,13 @@ package Easy.no876;
 class Solution {
 	public ListNode middleNode(ListNode head) {
 
-		ListNode node = head;
-		int cnt = 0;
+		ListNode forward = head, backward = head;
 
-		while (node != null) {
-			node = node.next;
-			cnt++;
+		while (forward != null && forward.next != null) {
+			forward = forward.next.next;
+			backward = backward.next;
 		}
 
-		cnt /= 2;
-
-		node = head;
-
-		while (cnt-- > 0)
-			node = node.next;
-
-		return node;
+		return backward;
 	}
 }
