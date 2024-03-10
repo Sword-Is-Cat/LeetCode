@@ -1,38 +1,27 @@
 package Easy.no349;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 class Solution {
 	public int[] intersection(int[] nums1, int[] nums2) {
 
-		Arrays.sort(nums1);
-		Arrays.sort(nums2);
+		boolean[][] nums = new boolean[1001][2];
+		ArrayList<Integer> list = new ArrayList<>();
 
-		Set<Integer> set = new HashSet<>();
-
-		int i = 0;
-		int j = 0;
-
-		while (i < nums1.length && j < nums2.length) {
-			if (nums1[i] > nums2[j])
-				j++;
-			else if (nums1[i] < nums2[j])
-				i++;
-			else {
-				set.add(nums1[i]);
-				i++;
-				j++;
-			}
+		for (int i = 0; i < nums1.length; i++) {
+			nums[nums1[i]][0] = true;
 		}
 
-		Integer[] temp = (Integer[]) set.toArray(new Integer[set.size()]);
+		for (int i = 0; i < nums2.length; i++) {
+			if (nums[nums2[i]][0] && !nums[nums2[i]][1])
+				list.add(nums2[i]);
+			nums[nums2[i]][1] = true;
+		}
 
-		int[] answer = new int[temp.length];
-
-		for (int k = 0; k < answer.length; k++)
-			answer[k] = temp[k];
+		int[] answer = new int[list.size()];
+		for (int i = 0; i < answer.length; i++) {
+			answer[i] = list.get(i);
+		}
 
 		return answer;
 	}
