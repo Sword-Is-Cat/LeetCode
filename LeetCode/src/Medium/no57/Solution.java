@@ -1,35 +1,37 @@
 package Medium.no57;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 class Solution {
 	public int[][] insert(int[][] intervals, int[] newInterval) {
 
-		int[][] result = new int[intervals.length + 1][2];
-		for (int i = 0; i < intervals.length; i++) {
-			result[i] = intervals[i];
-		}
-		result[intervals.length] = newInterval;
+		ArrayList<int[]> list = new ArrayList<>();
 
-		Arrays.sort(result, (a, b) -> a[0] - b[0]);
+		for (int[] interval : intervals) {
 
-		int rIdx = -1;
-		int wIdx = 0;
-
-		while (++rIdx < result.length) {
-
-			int[] rArr = result[rIdx];
-			int[] wArr = result[wIdx];
-
-			if ((wArr[1] - rArr[0]) * (rArr[1] - wArr[0]) >= 0) {
-				wArr[0] = Math.min(wArr[0], rArr[0]);
-				wArr[1] = Math.max(wArr[1], rArr[1]);
+			if ((interval[1] - newInterval[0]) * (newInterval[1] - interval[0]) >= 0) {
+				// 겹치면
+				newInterval[0] = Math.min(interval[0], newInterval[0]);
+				newInterval[1] = Math.max(interval[1], newInterval[1]);
+			} else if (interval[0] < newInterval[0]) {
+				list.add(interval);
 			} else {
-				result[++wIdx] = rArr;
+				list.add(newInterval);
+				newInterval = interval;
 			}
 
 		}
 
-		return Arrays.copyOfRange(result, 0, ++wIdx);
+		list.add(newInterval);
+
+		// return list.stream().toArray(int[][]::new);
+
+		int[][] answer = new int[list.size()][];
+		for (int i = 0; i < answer.length; i++) {
+			answer[i] = list.get(i);
+		}
+
+		return answer;
+
 	}
 }
