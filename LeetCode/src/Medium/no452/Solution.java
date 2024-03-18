@@ -7,17 +7,18 @@ class Solution {
 
 		Arrays.sort(points, (a, b) -> Integer.compare(a[0], b[0]));
 
-		int shoot = points[0][1], arrow = 1;
+		int shoot = points[0][1], cnt = 1;
 
-		for (int[] balloon : points) {
-
-			if (shoot < balloon[0]) {
-				shoot = balloon[1];
-				arrow++;
+		for (int[] point : points) {
+			if (shoot < point[0]) {
+				shoot = point[1];
+				cnt++;
 			} else {
-				shoot = Math.min(shoot, balloon[1]);
+				shoot = Math.min(shoot, point[1]);
 			}
 		}
-		return arrow;
+
+		return cnt;
+
 	}
 }
