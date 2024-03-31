@@ -1,41 +1,22 @@
 package Hard.no2444;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 class Solution {
 	public long countSubarrays(int[] nums, int minK, int maxK) {
 
-		Queue<Integer> minQue = new LinkedList<>();
-		Queue<Integer> maxQue = new LinkedList<>();
-
 		long ans = 0L;
-		int left = 0, right = 0, length = nums.length;
+		int badIdx = -1, minIdx = -1, maxIdx = -1;
 
-		while (left < length) {
-
-			while (right < length && minK <= nums[right] && nums[right] <= maxK) {
-				if (minK == nums[right])
-					minQue.add(right);
-				if (maxK == nums[right])
-					maxQue.add(right);
-				right++;
+		for (int i = 0; i < nums.length; i++) {
+			if (nums[i] < minK || maxK < nums[i]) {
+				badIdx = i;
 			}
-
-			if (!minQue.isEmpty() && !maxQue.isEmpty()) {
-				ans += right - Math.max(minQue.peek(), maxQue.peek());
-				if (minQue.peek() == left)
-					minQue.poll();
-				if (maxQue.peek() == left)
-					maxQue.poll();
-				left++;
-			} else {
-				minQue.clear();
-				maxQue.clear();
-				right++;
-				left = right;
+			if (nums[i] == minK) {
+				minIdx = i;
 			}
-
+			if (nums[i] == maxK) {
+				maxIdx = i;
+			}
+			ans += Math.max(0, Math.min(minIdx, maxIdx) - badIdx);
 		}
 
 		return ans;
