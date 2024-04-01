@@ -1,13 +1,20 @@
 package Easy.no58;
 
-class Solution {
+public class Solution {
 	public int lengthOfLastWord(String s) {
 
-		String[] arr = s.split(" ");
-		if (arr.length == 0)
-			return 0;
+		int cnt = 0;
 
-		return arr[arr.length - 1].length();
-
+		for (int i = s.length() - 1; i >= 0; i--) {
+			char ch = s.charAt(i);
+			if (ch == ' ') {
+				if (cnt > 0) {
+					return cnt;
+				}
+			} else {
+				cnt++;
+			}
+		}
+		return cnt;
 	}
 }
