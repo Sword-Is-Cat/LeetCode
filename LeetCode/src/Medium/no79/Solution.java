@@ -1,46 +1,50 @@
 package Medium.no79;
 
 class Solution {
+
+	// directions (up, down, left, right)
+	int[][] dir = new int[][] { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+
 	public boolean exist(char[][] board, String word) {
 
-		boolean result = false;
 		boolean[][] visit = new boolean[board.length][board[0].length];
+		char[] wordArr = word.toCharArray();
+
+		boolean answer = false;
 
 		for (int row = 0; row < board.length; row++) {
-			for (int col = 0; col < board[row].length; col++) {
-				if (!result)
-					result |= dfs(board, visit, row, col, word, 0);
+			for (int col = 0; col < board[row].length && !answer; col++) {
+				answer |= areaSearch(board, visit, wordArr, row, col, 0);
 			}
 		}
 
-		return result;
-
+		return answer;
 	}
 
-	boolean dfs(char[][] grid, boolean[][] visit, int row, int col, String word, int idx) {
+	private boolean areaSearch(char[][] board, boolean[][] visit, char[] word, int row, int col, int idx) {
 
-		if (idx == word.length())
+		// all character matched
+		if (idx == word.length)
 			return true;
 
+		// check coord(row, col) valid
+		if (row < 0 || board.length <= row || col < 0 || board[row].length <= col || visit[row][col])
+			return false;
+
+		// check character match & unvisit
+		if (board[row][col] != word[idx] || visit[row][col])
+			return false;
+
 		boolean result = false;
+		visit[row][col] = true;
 
-		if (0 <= row && row < grid.length && 0 <= col && col < grid[row].length) {
-			// valid row & col
-			if (!visit[row][col] && grid[row][col] == word.charAt(idx)) {
-				// non visited & correct word
-
-				visit[row][col] = true;
-
-				result |= dfs(grid, visit, row - 1, col, word, idx + 1);
-				result |= dfs(grid, visit, row + 1, col, word, idx + 1);
-				result |= dfs(grid, visit, row, col - 1, word, idx + 1);
-				result |= dfs(grid, visit, row, col + 1, word, idx + 1);
-
-				visit[row][col] = false;
-
-			}
+		// check next step (4 directions)
+		for (int i = 0; i < dir.length && !result; i++) {
+			result |= areaSearch(board, visit, word, row + dir[i][0], col + dir[i][1], idx + 1);
 		}
 
+		visit[row][col] = false;
 		return result;
 	}
+
 }
