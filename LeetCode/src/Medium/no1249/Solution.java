@@ -1,37 +1,49 @@
 package Medium.no1249;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
-
 class Solution {
 	public String minRemoveToMakeValid(String s) {
 
 		StringBuilder sb = new StringBuilder();
-		Stack<Character> stack = new Stack<>();
-		Stack<Integer> indexStack = new Stack<>();
+		int cnt = 0;
 
-		char[] arr = s.toCharArray();
-
-		for (int i = 0; i < arr.length; i++) {
-			char ch = arr[i];
-			if (ch == '(' || ch == ')') {
-				if (!stack.isEmpty() && stack.peek() == '(' && ch == ')') {
-					stack.pop();
-					indexStack.pop();
-				} else {
-					stack.add(ch);
-					indexStack.add(i);
+		for (int i = 0; i < s.length(); i++) {
+			char ch = s.charAt(i);
+			switch (ch) {
+			case ')':
+				if (cnt > 0) {
+					sb.append(ch);
+					cnt--;
 				}
+				break;
+			case '(':
+				cnt++;
+			default:
+				sb.append(ch);
 			}
 		}
 
-		Set<Integer> set = new HashSet<>(indexStack);
+		s = sb.toString();
+		sb = new StringBuilder();
+		cnt = 0;
 
-		for (int i = 0; i < arr.length; i++) {
-			if (!set.contains(i))
-				sb.append(arr[i]);
+		for (int i = s.length() - 1; i >= 0; i--) {
+			char ch = s.charAt(i);
+			switch (ch) {
+			case '(':
+				if (cnt > 0) {
+					sb.append(ch);
+					cnt--;
+				}
+				break;
+			case ')':
+				cnt++;
+			default:
+				sb.append(ch);
+			}
 		}
-		return sb.toString();
+
+		s = sb.reverse().toString();
+
+		return s;
 	}
 }
