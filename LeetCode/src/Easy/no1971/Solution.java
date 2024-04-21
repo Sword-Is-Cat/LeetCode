@@ -2,30 +2,34 @@ package Easy.no1971;
 
 class Solution {
 
-	int[] array;
+	int[] uf;
 
 	public boolean validPath(int n, int[][] edges, int source, int destination) {
 
-		array = new int[n];
-		for (int i = 0; i < n; i++)
-			array[i] = i;
+		uf = new int[n];
+		for (int i = 0; i < n; i++) {
+			uf[i] = i;
+		}
 
 		for (int[] edge : edges) {
-			int idx1 = edge[0], idx2 = edge[1];
-			int val1 = getValue(idx1), val2 = getValue(idx2);
-			if (val1 < val2)
-				array[val2] = val1;
-			else if (val1 > val2)
-				array[val1] = val2;
+			setUF(edge[0], edge[1]);
 		}
-		return getValue(source) == getValue(destination);
+
+		return getUF(source) == getUF(destination);
 	}
 
-	int getValue(int idx) {
-		int val = array[idx];
-		if (idx != val) {
-			array[idx] = getValue(val);
+	private int getUF(int i) {
+		if (i != uf[i]) {
+			uf[i] = getUF(uf[i]);
 		}
-		return array[idx];
+		return uf[i];
+	}
+
+	private void setUF(int i, int j) {
+		i = getUF(i);
+		j = getUF(j);
+		int min = Math.min(i, j);
+		uf[i] = min;
+		uf[j] = min;
 	}
 }
