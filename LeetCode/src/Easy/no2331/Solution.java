@@ -1,15 +1,16 @@
 package Easy.no2331;
 
 class Solution {
-    public boolean evaluateTree(TreeNode root) {
-        if(root.val<2) {
-        	return root.val == 1;
-        }else if(root.val == 2) {
-        	return evaluateTree(root.left) || evaluateTree(root.right);
-        }else if(root.val == 3) {
-        	return evaluateTree(root.left) && evaluateTree(root.right);
-        }else {
-        	return false;
-        }
-    }
+	public boolean evaluateTree(TreeNode root) {
+		switch (root.val) {
+		case 1:
+			return true;
+		case 2:
+			return evaluateTree(root.left) || evaluateTree(root.right);
+		case 3:
+			return evaluateTree(root.left) && evaluateTree(root.right);
+		default:
+			return false;
+		}
+	}
 }
