@@ -4,38 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Solution {
-
-	List<List<Integer>> list;
-	boolean[] flags;
-
 	public List<List<Integer>> subsets(int[] nums) {
 
-		list = new ArrayList<>();
-		flags = new boolean[nums.length];
+		List<List<Integer>> ans = new ArrayList<>();
 
-		dfs(0, nums);
+		dfs(ans, nums, new boolean[nums.length], 0);
 
-		return list;
+		return ans;
 	}
 
-	void dfs(int index, int[] nums) {
+	private void dfs(List<List<Integer>> container, int[] nums, boolean[] flags, int idx) {
 
-		if (index == nums.length) {
-			
-			List<Integer> temp = new ArrayList<>();
-			
-			for (int i = 0; i < nums.length; i++)
-				if (flags[i])
-					temp.add(nums[i]);
-			
-			list.add(temp);
-			
+		if (idx == nums.length) {
+			List<Integer> item = new ArrayList<>();
+			for (int i = 0; i < nums.length; i++) {
+				if (flags[i]) {
+					item.add(nums[i]);
+				}
+			}
+			container.add(item);
 		} else {
-			
-			flags[index] = true;
-			dfs(index + 1, nums);
-			flags[index] = false;
-			dfs(index + 1, nums);
+			dfs(container, nums, flags, idx + 1);
+			flags[idx] = true;
+			dfs(container, nums, flags, idx + 1);
+			flags[idx] = false;
 		}
+
 	}
 }
