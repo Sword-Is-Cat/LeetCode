@@ -1,21 +1,23 @@
 package Medium.no260;
 
-import java.util.HashSet;
-
 class Solution {
 	public int[] singleNumber(int[] nums) {
 
 		int[] ans = new int[2];
-		HashSet<Integer> set = new HashSet<>();
-
+		int temp = 0;
 		for (int num : nums) {
-			if (!set.add(num))
-				set.remove(num);
+			temp ^= num;
 		}
 
-		int idx = 0;
-		for (int no : set)
-			ans[idx++] = no;
+		temp &= -temp;
+
+		for (int num : nums) {
+			if ((temp & num) == 0) {
+				ans[0] ^= num;
+			} else {
+				ans[1] ^= num;
+			}
+		}
 
 		return ans;
 	}
