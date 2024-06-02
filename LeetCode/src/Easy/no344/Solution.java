@@ -3,13 +3,13 @@ package Easy.no344;
 class Solution {
 	public void reverseString(char[] s) {
 
+		int left = 0, right = s.length - 1;
 		char temp;
 
-		for (int i = 0; i < s.length / 2; i++) {
-			int j = s.length - 1 - i;
-			temp = s[i];
-			s[i] = s[j];
-			s[j] = temp;
+		while (left < right) {
+			temp = s[left];
+			s[left] = s[right];
+			s[right] = temp;
 		}
 
 	}
