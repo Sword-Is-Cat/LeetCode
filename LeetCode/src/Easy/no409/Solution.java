@@ -1,34 +1,21 @@
 package Easy.no409;
 
-import java.util.HashMap;
-import java.util.Map;
-
 class Solution {
 	public int longestPalindrome(String s) {
 
-		char[] arr = s.toCharArray();
-
-		Map<Character, Integer> map = new HashMap<>();
-
-		for (char ch : arr) {
-			if (map.containsKey(ch))
-				map.put(ch, map.get(ch) + 1);
-			else
-				map.put(ch, 1);
+		int[] cnts = new int[58];
+		for (char ch : s.toCharArray()) {
+			cnts[ch - 'A']++;
 		}
 
-		boolean hasOdd = false;
-		int answer = 0;
+		int ans = 0, odd = 0;
 
-		for (char ch : map.keySet()) {
-
-			answer += map.get(ch) / 2 * 2;
-
-			if (map.get(ch) % 2 == 1)
-				hasOdd = true;
+		for (int i = 0; i < cnts.length; i++) {
+			ans += cnts[i] - cnts[i] % 2;
+			odd |= cnts[i] % 2;
 		}
 
-		return hasOdd ? answer + 1 : answer;
+		return ans + odd;
 
 	}
 }
