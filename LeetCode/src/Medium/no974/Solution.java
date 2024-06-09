@@ -1,22 +1,16 @@
 package Medium.no974;
 
-import java.util.Arrays;
-
 class Solution {
 	public int subarraysDivByK(int[] nums, int k) {
 
 		int[] cnts = new int[k];
-		cnts[0]++;
+		cnts[0] = 1;
+		int temp = 0, ans = 0;
 
 		for (int i = 0; i < nums.length; i++) {
-			if (i > 0)
-				nums[i] += nums[i - 1];
-			nums[i] %= k;
-			if (nums[i] < 0)
-				nums[i] += k;
-			cnts[nums[i]]++;
+			temp += nums[i];
+			ans += cnts[Math.floorMod(temp, k)]++;
 		}
-
-		return Arrays.stream(cnts).map(i -> i * (i - 1) / 2).sum();
+		return ans;
 	}
 }
