@@ -1,19 +1,26 @@
 package Easy.no1051;
 
-import java.util.Arrays;
-
 class Solution {
 	public int heightChecker(int[] heights) {
 
-		int[] arr = heights.clone();
-		Arrays.sort(arr);
+		int[] heightFreq = new int[101];
+		for (int height : heights) {
+			heightFreq[height]++;
+		}
 
-		int cnt = 0;
+		int ans = 0, targetHeight = 0;
 
-		for (int i = 0; i < arr.length; i++)
-			if (arr[i] != heights[i]) cnt++;
-		
-		return cnt;
+		for (int height : heights) {
+			while (heightFreq[targetHeight] == 0) {
+				targetHeight++;
+			}
+			heightFreq[targetHeight]--;
+			if (height != targetHeight) {
+				ans++;
+			}
+		}
+
+		return ans;
 
 	}
 }
