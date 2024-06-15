@@ -1,34 +1,27 @@
 package Hard.no502;
 
-import java.util.Arrays;
 import java.util.PriorityQueue;
 
 class Solution {
 	public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
 
-		int length = profits.length;
-		int[][] infos = new int[length][];
+		PriorityQueue<int[]> standBy = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+		PriorityQueue<int[]> workable = new PriorityQueue<>((a, b) -> b[1] - a[1]);
 
-		for (int i = 0; i < length; i++) {
-			infos[i] = new int[] { capital[i], profits[i] };
+		for (int i = 0; i < profits.length; i++) {
+			if (capital[i] <= w)
+				workable.add(new int[] { capital[i], profits[i] });
+			else
+				standBy.add(new int[] { capital[i], profits[i] });
 		}
 
-		Arrays.sort(infos, (a, b) -> a[0] - b[0]);
-
-		PriorityQueue<Integer> que = new PriorityQueue<>((a, b) -> b - a);
-
-		int idx = 0;
-
 		while (k-- > 0) {
-
-			while (idx < length && infos[idx][0] <= w) {
-				que.add(infos[idx++][1]);
+			while (!standBy.isEmpty() && standBy.peek()[0] <= w) {
+				workable.add(standBy.poll());
 			}
-
-			if (!que.isEmpty()) {
-				w += que.poll();
+			if (!workable.isEmpty()) {
+				w += workable.poll()[1];
 			}
-
 		}
 
 		return w;
