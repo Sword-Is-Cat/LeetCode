@@ -2,20 +2,16 @@ package Easy.no350;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 class Solution {
-    public int[] intersect(int[] nums1, int[] nums2) {
+	public int[] intersect(int[] nums1, int[] nums2) {
 
 		Arrays.sort(nums1);
 		Arrays.sort(nums2);
 
-		List<Integer> list = new ArrayList<>();
+		ArrayList<Integer> list = new ArrayList<>();
 
-		int i = 0;
-		int j = 0;
-
-		while (i < nums1.length && j < nums2.length) {
+		for (int i = 0, j = 0; i < nums1.length && j < nums2.length;) {
 			if (nums1[i] > nums2[j])
 				j++;
 			else if (nums1[i] < nums2[j])
@@ -29,8 +25,9 @@ class Solution {
 
 		int[] answer = new int[list.size()];
 
-		for (int k = 0; k < answer.length; k++)
-			answer[k] = list.get(k);
+		for (int i = 0; i < answer.length; i++) {
+			answer[i] = list.get(i);
+		}
 
 		return answer;
 	}
