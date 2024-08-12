@@ -1,32 +1,26 @@
 package Easy.no703;
 
 import java.util.PriorityQueue;
-import java.util.Queue;
 
 class KthLargest {
 
-	private int limit;
-	private Queue<Integer> que;
+	PriorityQueue<Integer> que;
+	int k;
 
 	public KthLargest(int k, int[] nums) {
 
-		limit = k;
 		que = new PriorityQueue<>();
+		this.k = k;
 
 		for (int num : nums)
 			que.add(num);
 
-		while (que.size() > limit)
-			que.poll();
-
 	}
 
 	public int add(int val) {
-
 		que.add(val);
-		while (que.size() > limit)
+		while (que.size() > k)
 			que.poll();
-
 		return que.peek();
 	}
 }
