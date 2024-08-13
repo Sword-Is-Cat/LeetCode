@@ -16,7 +16,7 @@ class Solution {
 		List<Integer> list = new ArrayList<>();
 
 		for (int key : candidates)
-			addCnt(cntMap, key);
+			cntMap.put(key, cntMap.getOrDefault(key, 0) + 1);
 
 		mapKeyList = new ArrayList<>(cntMap.keySet());
 
@@ -24,13 +24,6 @@ class Solution {
 
 		return answer;
 
-	}
-
-	public void addCnt(Map<Integer, Integer> cntMap, int key) {
-		if (cntMap.containsKey(key))
-			cntMap.put(key, cntMap.get(key) + 1);
-		else
-			cntMap.put(key, 1);
 	}
 
 	public void process(int index, int sum, int target, List<Integer> list) {
@@ -56,9 +49,8 @@ class Solution {
 
 		}
 
-		sum -= value * cnt;
-		for(int i =0 ; i<cnt ;i++)
-			list.remove(list.size()-1);
+		for (int i = 0; i < cnt; i++)
+			list.remove(list.size() - 1);
 	}
 
 }
