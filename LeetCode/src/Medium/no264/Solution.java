@@ -1,41 +1,26 @@
 package Medium.no264;
 
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Set;
-
 class Solution {
-
 	public int nthUglyNumber(int n) {
 
-		PriorityQueue<Long> que = new PriorityQueue<>();
-		Set<Long> set = new HashSet<>();
+		int[] dp = new int[n + 1];
+		dp[1] = 1;
 
-		que.add(1L);
+		for (int i = 2, i2 = 1, i3 = 1, i5 = 1; i <= n; i++) {
 
-		int index = 1;
+			int n2 = 2 * dp[i2], n3 = 3 * dp[i3], n5 = 5 * dp[i5];
+			int min = Math.min(n2, Math.min(n3, n5));
+			dp[i] = min;
 
-		while (index < n) {
-
-			long no = que.poll();
-
-			long no1 = no * 2;
-			long no2 = no * 3;
-			long no3 = no * 5;
-
-			if (no1 > 0 && set.add(no1))
-				que.add(no1);
-			if (no2 > 0 && set.add(no2))
-				que.add(no2);
-			if (no3 > 0 && set.add(no3))
-				que.add(no3);
-			index++;
+			if (min == n2)
+				i2++;
+			if (min == n3)
+				i3++;
+			if (min == n5)
+				i5++;
 
 		}
-		
-		long answer = que.poll();
 
-		return (int)answer;
+		return dp[n];
 	}
-
 }
