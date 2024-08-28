@@ -5,12 +5,11 @@ class Solution {
 	int[][] dir = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
 
 	public int countSubIslands(int[][] grid1, int[][] grid2) {
-		
-		int row = grid1.length, col = grid1[0].length;
+
 		int ans = 0;
 
-		for (int r = 0; r < row; r++) {
-			for (int c = 0; c < col; c++) {
+		for (int r = 0; r < grid1.length; r++) {
+			for (int c = 0; c < grid1[0].length; c++) {
 				if (grid2[r][c] == 1)
 					ans += isSubIslands(grid1, grid2, r, c) ? 1 : 0;
 			}
