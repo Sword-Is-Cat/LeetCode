@@ -12,8 +12,10 @@ class Solution {
 
 		int[] answer = new int[n];
 
+		int div = sum / n, mod = sum % n;
+
 		for (int i = 0; i < n; i++)
-			answer[i] = (i < sum % n ? 1 : 0) + sum / n;
+			answer[i] = (i < mod ? 1 : 0) + div;
 
 		return answer;
 	}
