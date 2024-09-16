@@ -1,28 +1,35 @@
 package Medium.no539;
 
-import java.util.Arrays;
 import java.util.List;
 
 class Solution {
 	public int findMinDifference(List<String> timePoints) {
 
-		int[] arr = new int[timePoints.size()];
-		for (int i = 0; i < arr.length; i++)
-			arr[i] = hhmmToInt(timePoints.get(i));
+		boolean[] occur = new boolean[1440];
 
-		Arrays.sort(arr);
+		int min = 1440, ans = 1440, prev = -1;
 
-		int ans = 1440;
-		for (int i = 0; i < arr.length; i++) {
-			if (i == 0) {
-				ans = Math.min(ans, ans + arr[i] - arr[arr.length - 1]);
-			} else {
-				ans = Math.min(ans, arr[i] - arr[i - 1]);
+		for (String timePoint : timePoints) {
+			int time = hhmmToInt(timePoint);
+			if (occur[time])
+				return 0;
+			occur[time] = true;
+			min = Math.min(min, time);
+		}
+
+		min += 1440;
+
+		for (int t = 0; t < occur.length; t++) {
+			if (occur[t]) {
+				ans = Math.min(ans, min - t);
+				if (prev != -1) {
+					ans = Math.min(ans, t - prev);
+				}
+				prev = t;
 			}
 		}
 
 		return ans;
-
 	}
 
 	private int hhmmToInt(String hhmm) {
