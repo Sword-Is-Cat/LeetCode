@@ -5,8 +5,7 @@ import java.util.PriorityQueue;
 class Solution {
 	public String largestNumber(int[] nums) {
 
-		PriorityQueue<String> que = new PriorityQueue<>(
-				(a, b) -> Long.parseLong(b + a) - Long.parseLong(a + b) > 0 ? 1 : -1);
+		PriorityQueue<String> que = new PriorityQueue<>((a, b) -> (b + a).compareTo(a + b));
 
 		for (int no : nums)
 			que.add(Integer.toString(no));
