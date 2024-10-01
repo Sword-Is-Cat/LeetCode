@@ -11,7 +11,7 @@ class Solution {
 			return false;
 
 		for (int i = 1; i < k; i++) {
-			if (rem[i] != rem[(k - i) % k])
+			if (rem[i] != rem[k - i])
 				return false;
 		}
 		return true;
