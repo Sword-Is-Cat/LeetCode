@@ -1,37 +1,25 @@
 package Easy.no1331;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 class Solution {
 	public int[] arrayRankTransform(int[] arr) {
 
-		if (arr.length == 0)
-			return arr;
+		int[] clone = arr.clone();
+		Arrays.sort(clone);
 
-		int[][] original = new int[arr.length][];
-		int[][] sorted = new int[arr.length][];
-
-		for (int i = 0; i < arr.length; i++) {
-			original[i] = sorted[i] = new int[] { arr[i], 0 };
+		HashMap<Integer, Integer> map = new HashMap<>();
+		int rank = 1;
+		for (int i = 0; i < clone.length; i++) {
+			if (!map.containsKey(clone[i]))
+				map.put(clone[i], rank++);
 		}
+		
+		for(int i = 0;i<arr.length;i++)
+			arr[i] = map.get(arr[i]);
 
-		Arrays.sort(sorted, (a, b) -> Integer.compare(a[0], b[0]));
-		int prev = sorted[0][0], rank = 1;
-
-		for (int i = 0; i < arr.length; i++) {
-			if (prev < sorted[i][0]) {
-				prev = sorted[i][0];
-				rank++;
-			}
-			sorted[i][1] = rank;
-		}
-
-		int[] ans = new int[arr.length];
-		for (int i = 0; i < arr.length; i++) {
-			ans[i] = original[i][1];
-		}
-
-		return ans;
+		return arr;
 
 	}
 }
