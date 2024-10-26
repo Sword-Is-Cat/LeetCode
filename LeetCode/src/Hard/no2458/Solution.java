@@ -27,14 +27,14 @@ class Solution {
 
 	private void calcRemoved(int[] removeHeights, int[] existHeights, TreeNode node, int depth) {
 
-		int left = node.left == null ? 0 : node.left.val, right = node.right == null ? 0 : node.right.val;
-
 		if (node.left != null) {
-			removeHeights[left] = Math.max(removeHeights[node.val], right == 0 ? depth : existHeights[right]);
+			removeHeights[node.left.val] = Math.max(removeHeights[node.val],
+					node.right == null ? depth : existHeights[node.right.val]);
 			calcRemoved(removeHeights, existHeights, node.left, depth + 1);
 		}
 		if (node.right != null) {
-			removeHeights[right] = Math.max(removeHeights[node.val], left == 0 ? depth : existHeights[left]);
+			removeHeights[node.right.val] = Math.max(removeHeights[node.val],
+					node.left == null ? depth : existHeights[node.left.val]);
 			calcRemoved(removeHeights, existHeights, node.right, depth + 1);
 		}
 
