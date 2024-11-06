@@ -3,21 +3,23 @@ package Medium.no3011;
 class Solution {
 	public boolean canSortArray(int[] nums) {
 
-		int[] bit = nums.clone();
-		for (int i = 0; i < bit.length; i++) {
-			bit[i] = Integer.bitCount(bit[i]);
+		for (int i = 1; i < nums.length; i++) {
+			if (nums[i - 1] > nums[i]) {
+				if (Integer.bitCount(nums[i - 1]) != Integer.bitCount(nums[i]))
+					return false;
+				int temp = nums[i - 1];
+				nums[i - 1] = nums[i];
+				nums[i] = temp;
+			}
 		}
 
-		int end = nums.length;
-		while (end-- > 0) {
-			for (int i = 0; i < end; i++) {
-				if (nums[i] > nums[i + 1]) {
-					if (bit[i] != bit[i + 1])
-						return false;
-					int temp = nums[i];
-					nums[i] = nums[i + 1];
-					nums[i + 1] = temp;
-				}
+		for (int i = nums.length - 1; i > 0; i--) {
+			if (nums[i - 1] > nums[i]) {
+				if (Integer.bitCount(nums[i - 1]) != Integer.bitCount(nums[i]))
+					return false;
+				int temp = nums[i - 1];
+				nums[i - 1] = nums[i];
+				nums[i] = temp;
 			}
 		}
 
