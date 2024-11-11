@@ -10,10 +10,10 @@ class Solution {
 		primes[0] = false;
 		primes[1] = false;
 
-		for (int num = 2; num * num < primes.length; num++) {
-			if (primes[num]) {
-				for (int n = 2; n * num < primes.length; n++) {
-					primes[n * num] = false;
+		for (int prime = 2; prime * prime < primes.length; prime++) {
+			if (primes[prime]) {
+				for (int n = 2; n * prime < primes.length; n++) {
+					primes[n * prime] = false;
 				}
 			}
 		}
@@ -24,9 +24,9 @@ class Solution {
 				continue;
 
 			int minPrime = 0;
-			for (int p = nums[i] - nums[i + 1] + 1; p < nums[i]; p++) {
-				if (primes[p]) {
-					minPrime = p;
+			for (int prime = nums[i] - nums[i + 1] + 1; prime < nums[i]; prime++) {
+				if (primes[prime]) {
+					minPrime = prime;
 					break;
 				}
 			}
@@ -41,9 +41,9 @@ class Solution {
 	}
 
 	private int maxElement(int[] nums) {
-		int result = nums[0];
-		for (int i = 1; i < nums.length; i++)
-			result = Math.max(result, nums[i]);
+		int result = nums.length > 0 ? nums[0] : 0;
+		for (int num : nums)
+			result = Math.max(result, num);
 		return result;
 	}
 }
