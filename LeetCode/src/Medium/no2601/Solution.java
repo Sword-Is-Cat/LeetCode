@@ -34,7 +34,6 @@ class Solution {
 			if (minPrime == 0)
 				return false;
 			nums[i] -= minPrime;
-
 		}
 
 		return true;
