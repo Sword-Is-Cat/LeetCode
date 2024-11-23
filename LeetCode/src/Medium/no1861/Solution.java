@@ -13,22 +13,24 @@ class Solution {
 
 		for (int c = 0; c < grid[0].length; c++) {
 
-			int stackP = -1;
+			int drop = -1;
 
 			for (int r = grid.length - 1; r >= 0; r--) {
+				
+				if (drop == -1)
+					drop = r;
+				
 				switch (grid[r][c]) {
-				case '*':
-					stackP = -1;
-					break;
 				case '.':
-					if (stackP == -1)
-						stackP = r;
+					break;
+				case '*':
+					drop = -1;
 					break;
 				case '#':
-					if (stackP == -1)
-						stackP = r;
+					if (drop == -1)
+						drop = r;
 					grid[r][c] = '.';
-					grid[stackP--][c] = '#';
+					grid[drop--][c] = '#';
 					break;
 				}
 			}
