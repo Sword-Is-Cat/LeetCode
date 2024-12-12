@@ -12,7 +12,7 @@ class Solution {
 		}
 
 		while (k-- > 0) {
-			que.offer(getRoot(que.poll()));
+			que.offer((int) Math.sqrt(que.poll()));
 		}
 
 		long answer = 0;
@@ -23,18 +23,4 @@ class Solution {
 		return answer;
 	}
 
-	private int getRoot(int val) {
-
-		int left = 0, right = 40000;
-
-		while (left + 1 < right) {
-			int mid = (left + right) / 2;
-			if (mid * mid <= val)
-				left = mid;
-			else
-				right = mid;
-		}
-
-		return left;
-	}
 }
