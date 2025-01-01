@@ -13,10 +13,7 @@ class Solution {
 		for (int i = 0; i < arr.length; i++) {
 			if (i != 0)
 				ans = Math.max(ans, sum);
-			if (arr[i] == '0')
-				sum++;
-			else
-				sum--;
+			sum += arr[i] == '0' ? 1 : -1;
 		}
 
 		return ans;
