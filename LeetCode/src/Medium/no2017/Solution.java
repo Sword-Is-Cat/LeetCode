@@ -12,9 +12,8 @@ class Solution {
 
 		for (int i = 0; i < grid[0].length; i++) {
 			upper -= grid[0][i];
-			if (i > 0)
-				lower += grid[1][i - 1];
 			ans = Math.min(ans, Math.max(upper, lower));
+			lower += grid[1][i];
 		}
 
 		return ans;
