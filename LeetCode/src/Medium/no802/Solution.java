@@ -5,38 +5,33 @@ import java.util.List;
 
 class Solution {
 
-	boolean[] calced, isSafe;
+	boolean[][] cache;
 
 	public List<Integer> eventualSafeNodes(int[][] graph) {
 
-		calced = new boolean[graph.length];
-		isSafe = new boolean[graph.length];
-
+		cache = new boolean[graph.length][2];
 		List<Integer> ans = new ArrayList<>();
 
 		for (int i = 0; i < graph.length; i++) {
-			if (isSafeNode(i, graph)) {
+			if (isSafe(i, graph)) {
 				ans.add(i);
 			}
 		}
-
 		return ans;
 	}
 
-	private boolean isSafeNode(int index, int[][] graph) {
+	private boolean isSafe(int index, int[][] graph) {
 
-		if (!calced[index]) {
-			calced[index] = true;
+		if (!cache[index][0]) {
+
+			cache[index][0] = true;
 
 			boolean flag = true;
-
 			for (int conn : graph[index]) {
-				flag &= isSafeNode(conn, graph);
+				flag &= isSafe(conn, graph);
 			}
-			isSafe[index] = flag;
-
+			cache[index][1] = flag;
 		}
-		return isSafe[index];
-
+		return cache[index][1];
 	}
 }
