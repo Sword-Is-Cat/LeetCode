@@ -2,43 +2,36 @@ package Medium.no2349;
 
 import java.util.HashMap;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 class NumberContainers {
 
-	HashMap<Integer, Integer> idxVal;
-	HashMap<Integer, PriorityQueue<Integer>> valIdxQ;
+	HashMap<Integer, int[]> indexMap;
+	HashMap<Integer, Queue<int[]>> numberMap;
 
 	public NumberContainers() {
-		idxVal = new HashMap<Integer, Integer>();
-		valIdxQ = new HashMap<Integer, PriorityQueue<Integer>>();
+		indexMap = new HashMap<Integer, int[]>();
+		numberMap = new HashMap<Integer, Queue<int[]>>();
 	}
 
 	public void change(int index, int number) {
-		idxVal.put(index, number);
-		if (!valIdxQ.containsKey(number))
-			valIdxQ.put(number, new PriorityQueue<>());
-		valIdxQ.get(number).add(index);
+		if (!indexMap.containsKey(index))
+			indexMap.put(index, new int[] { index, number });
+		indexMap.get(index)[1] = number;
+		if (!numberMap.containsKey(number))
+			numberMap.put(number, new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0])));
+		numberMap.get(number).offer(indexMap.get(index));
 	}
 
 	public int find(int number) {
 
-		if (valIdxQ.containsKey(number)) {
-
-			PriorityQueue<Integer> que = valIdxQ.get(number);
-
-			while (!que.isEmpty()) {
-
-				int i = que.peek();
-				int val = idxVal.get(i);
-				if (number == val)
-					return i;
-				else
-					que.poll();
-
-			}
+		if (!numberMap.containsKey(number))
 			return -1;
 
-		} else
-			return -1;
+		Queue<int[]> que = numberMap.get(number);
+		while (!que.isEmpty() && que.peek()[1] != number)
+			que.poll();
+		return que.isEmpty() ? -1 : que.peek()[0];
+
 	}
 }
