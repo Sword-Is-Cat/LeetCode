@@ -1,40 +1,30 @@
 package Medium.no1980;
 
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 class Solution {
 	public String findDifferentBinaryString(String[] nums) {
 
+		Set<String> set = new HashSet<>();
+		for (String num : nums) {
+			set.add(num);
+		}
+
+		StringBuilder sb = new StringBuilder();
 		int length = nums.length;
-		int[] numbers = new int[length];
-
-		for (int i = 0; i < length; i++)
-			numbers[i] = parseBinaryString(nums[i]);
-
-		Arrays.sort(numbers);
-
-		int answer = length;
-
 		for (int i = 0; i < length; i++) {
-			if (numbers[i] != i) {
-				answer = i;
-				break;
-			}
+			sb.append("0");
+		}
+		String prefix = sb.toString();
+
+		for (int i = 0; i <= nums.length; i++) {
+			String str = Integer.toBinaryString(i);
+			str = (prefix + str).substring(str.length());
+			if (set.add(str))
+				return str;
 		}
 
-		return Integer.toBinaryString(answer + (1 << length)).substring(1);
+		return null;
 	}
-
-	private int parseBinaryString(String str) {
-
-		int result = 0;
-
-		for (int i = 0; i < str.length(); i++) {
-			result *= 2;
-			result += str.charAt(i) - '0';
-		}
-
-		return result;
-	}
-
 }
