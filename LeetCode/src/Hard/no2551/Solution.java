@@ -1,3 +1,7 @@
+package Hard.no2551;
+
+import java.util.Arrays;
+
 class Solution {
     public long putMarbles(int[] weights, int k) {
 
