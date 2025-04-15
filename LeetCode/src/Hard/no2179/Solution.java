@@ -1,0 +1,57 @@
+package Hard.no2179;
+
+class Solution {
+
+	public long goodTriplets(int[] nums1, int[] nums2) {
+
+		int n = nums1.length;
+		int[] pos2 = new int[n], reversedIndex = new int[n];
+
+		for (int i = 0; i < n; i++) {
+			pos2[nums2[i]] = i;
+		}
+
+		for (int i = 0; i < n; i++) {
+			reversedIndex[pos2[nums1[i]]] = i;
+		}
+
+		FenwickTree tree = new FenwickTree(n);
+
+		long ans = 0;
+		for (int value = 0; value < n; value++) {
+			int pos = reversedIndex[value];
+			int left = tree.query(pos);
+			tree.update(pos, 1);
+			int right = (n - 1 - pos) - (value - left);
+			ans += 1L * left * right;
+		}
+		return ans;
+	}
+}
+
+class FenwickTree {
+
+	private int[] tree;
+
+	public FenwickTree(int size) {
+		tree = new int[size + 1];
+	}
+
+	public void update(int index, int delta) {
+		index++;
+		while (index < tree.length) {
+			tree[index] += delta;
+			index += index & -index;
+		}
+	}
+
+	public int query(int index) {
+		index++;
+		int res = 0;
+		while (index > 0) {
+			res += tree[index];
+			index -= index & -index;
+		}
+		return res;
+	}
+}
