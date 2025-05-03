@@ -3,43 +3,23 @@ package Medium.no1007;
 class Solution {
 	public int minDominoRotations(int[] tops, int[] bottoms) {
 
-		int tVal = tops[0];
-		int bVal = bottoms[0];
+		int flip = Math.min(Math.min(getFlipCount(tops, bottoms, tops[0]), getFlipCount(bottoms, tops, bottoms[0])),
+				Math.min(getFlipCount(tops, bottoms, bottoms[0]), getFlipCount(bottoms, tops, tops[0])));
 
-		int ttCnt = 0;
-		int tbCnt = 0;
-		int btCnt = 0;
-		int bbCnt = 0;
+		return Math.min(flip, tops.length - flip);
+	}
 
-		boolean topPossible = true;
-		boolean botPossible = true;
-
-		for (int i = 0; i < tops.length; i++) {
-
-			if (topPossible) {
-				ttCnt += tVal == tops[i] ? 1 : 0;
-				tbCnt += tVal == bottoms[i] ? 1 : 0;
-				topPossible &= tVal == tops[i] || tVal == bottoms[i];
+	private int getFlipCount(int[] arr, int[] arr2, int target) {
+		int flip = 0;
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] == target) {
+				continue;
+			} else if (arr2[i] == target) {
+				flip++;
+			} else {
+				return arr.length + 1;
 			}
-
-			if (botPossible) {
-				btCnt += bVal == tops[i] ? 1 : 0;
-				bbCnt += bVal == bottoms[i] ? 1 : 0;
-				botPossible &= bVal == tops[i] || bVal == bottoms[i];
-			}
-
 		}
-
-		int tCnt = Math.min(tops.length - ttCnt, tops.length - tbCnt);
-		int bCnt = Math.min(tops.length - btCnt, tops.length - bbCnt);
-
-		int rst = -1;
-
-		if (topPossible && botPossible)
-			rst = Math.min(tCnt, bCnt);
-		else
-			rst = topPossible ? tCnt : botPossible ? bCnt : -1;
-
-		return rst;
+		return flip;
 	}
 }

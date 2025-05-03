@@ -1,29 +1,52 @@
 package Medium.no838;
 
+import java.util.Arrays;
+
 class Solution {
 	public String pushDominoes(String dominoes) {
 
-		boolean doit = true;
+		int length = dominoes.length();
+		char[] arr = dominoes.toCharArray();
+		int[] distFromR = new int[length], distFromL = new int[length];
+		Arrays.fill(distFromR, length);
+		Arrays.fill(distFromL, length);
 
-		while (doit) {
-
-			doit = false;
-
-			dominoes = dominoes.replaceAll("R\\.L", "MMM");
-
-			if (dominoes.contains(".L")) {
-				doit = true;
-				dominoes = dominoes.replaceAll("\\.L", "LL");
+		for (int i = 0; i < length; i++) {
+			switch (arr[i]) {
+			case 'L':
+				break;
+			case 'R':
+				distFromR[i] = 0;
+				break;
+			default:
+				if (i > 0 && distFromR[i - 1] < length)
+					distFromR[i] = distFromR[i - 1] + 1;
 			}
-
-			if (dominoes.contains("R.")) {
-				doit = true;
-				dominoes = dominoes.replaceAll("R\\.", "RR");
-			}
-
 		}
 
-		return dominoes.replaceAll("MMM", "R.L");
+		for (int i = distFromL.length - 1; i >= 0; i--) {
+			switch (arr[i]) {
+			case 'L':
+				distFromL[i] = 0;
+				break;
+			case 'R':
+				break;
+			default:
+				if (i < length - 1 && distFromL[i + 1] < length)
+					distFromL[i] = distFromL[i + 1] + 1;
+			}
+		}
+
+		for (int i = 0; i < length; i++) {
+			if (arr[i] == '.') {
+				if (distFromL[i] < distFromR[i])
+					arr[i] = 'L';
+				else if (distFromL[i] > distFromR[i])
+					arr[i] = 'R';
+			}
+		}
+
+		return new String(arr);
 
 	}
 
