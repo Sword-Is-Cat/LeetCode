@@ -4,30 +4,20 @@ class Solution {
 	public long maximumValueSum(int[] nums, int k, int[][] edges) {
 
 		long sum = 0L;
-		int plusMin = Integer.MAX_VALUE, nonPlusMax = Integer.MIN_VALUE;
-		int plusCnt = 0;
+		int mask = 0, maxMinus = Integer.MIN_VALUE;
 
 		for (int i = 0; i < nums.length; i++) {
 			sum += nums[i];
 			int temp = (nums[i] ^ k) - nums[i];
 			if (temp > 0) {
 				sum += temp;
-				plusCnt++;
-				plusMin = Math.min(plusMin, temp);
-			} else {
-				nonPlusMax = Math.max(nonPlusMax, temp);
+				mask ^= 1;
+				temp *= -1;
 			}
+			maxMinus = Math.max(maxMinus, temp);
 		}
 
-		if (plusCnt % 2 == 1) {
-			if (plusMin + nonPlusMax > 0) {
-				sum += nonPlusMax;
-			} else {
-				sum -= plusMin;
-			}
-		}
-
-		return sum;
+		return sum + mask * maxMinus;
 
 	}
 }
