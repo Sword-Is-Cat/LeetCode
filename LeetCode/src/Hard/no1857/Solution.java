@@ -1,59 +1,65 @@
 package Hard.no1857;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
+import java.util.Queue;
 
 class Solution {
 	public int largestPathValue(String colors, int[][] edges) {
 
-		char[] color = colors.toCharArray();
-		int length = color.length;
-		for (int i = 0; i < color.length; i++) {
-			color[i] -= 'a';
-		}
-
-		ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
-		int[][] counts = new int[length][26];
-		int[] cntReceive = new int[length];
-
+		int length = colors.length();
+		Node[] nodes = new Node[length];
 		for (int i = 0; i < length; i++) {
-			graph.add(new ArrayList<>());
+			nodes[i] = new Node(colors.charAt(i));
 		}
 
 		for (int[] edge : edges) {
-			int a = edge[0], b = edge[1];
-			graph.get(a).add(b);
-			cntReceive[b]++;
+			nodes[edge[0]].conn.add(nodes[edge[1]]);
+			nodes[edge[1]].receive++;
 		}
 
-		HashSet<Integer> progSet = new HashSet<>();
-
+		Queue<Node> queue = new ArrayDeque<>();
 		for (int i = 0; i < length; i++) {
-			if (cntReceive[i] == 0)
-				progSet.add(i);
+			if (nodes[i].receive == 0)
+				queue.offer(nodes[i]);
 		}
 
-		int maxCnt = 0, visit = 0;
+		int answer = 0, visit = 0;
 
-		while (!progSet.isEmpty()) {
+		while (!queue.isEmpty()) {
 
-			int index = progSet.iterator().next();
-			progSet.remove(index);
-
+			Node node = queue.poll();
 			visit++;
-			maxCnt = Math.max(maxCnt, ++counts[index][color[index]]);
+			answer = Math.max(answer, ++node.maxColor[node.color]);
 
-			for (int next : graph.get(index)) {
-
-				for (int i = 0; i < 26; i++) {
-					counts[next][i] = Math.max(counts[next][i], counts[index][i]);
-				}
-
-				if (--cntReceive[next] == 0)
-					progSet.add(next);
+			for (Node next : node.conn) {
+				next.mergeColorCount(node.maxColor);
+				if (--next.receive == 0)
+					queue.offer(next);
 			}
 		}
 
-		return length == visit ? maxCnt : -1;
+		return visit == length ? answer : -1;
+	}
+}
+
+class Node {
+	int color;
+	List<Node> conn;
+	int receive;
+	int[] maxColor;
+
+	Node(char ch) {
+		color = ch - 'a';
+		conn = new ArrayList<>();
+		receive = 0;
+		maxColor = new int[26];
+	}
+
+	public void mergeColorCount(int[] colors) {
+		for (int i = 0; i < maxColor.length; i++) {
+			maxColor[i] = Math.max(maxColor[i], colors[i]);
+		}
 	}
 }
