@@ -1,58 +1,54 @@
 package Medium.no909;
 
-class Solution {
+import java.util.ArrayDeque;
+import java.util.Queue;
 
-	int length, ans, max;
-	int[] linear;
+class Solution {
 
 	public int snakesAndLadders(int[][] board) {
 
-		length = board.length;
-		max = length * length;
-		ans = max;
-		linear = new int[max + 1];
+		int length = board.length, extent = length * length;
+		int[] arr = new int[extent + 1];
 
-		int row = length - 1, col = 0, cell = 1, step = 1;
-
-		while (0 <= row && 0 <= col && col < length) {
-
-			linear[cell++] = board[row][col];
-
-			col += step;
-
-			if (col < 0 || col == length) {
-				row--;
-				step *= -1;
-				col += step;
+		int idx = 1;
+		for (int row = length - 1; row >= 0; row--) {
+			if (row % 2 == length % 2) {
+				for (int col = length - 1; col >= 0; col--) {
+					arr[idx++] = board[row][col];
+				}
+			} else {
+				for (int col = 0; col < length; col++) {
+					arr[idx++] = board[row][col];
+				}
 			}
 		}
 
-		dfs(1, 0);
+		boolean[] visit = new boolean[arr.length];
+		Queue<Integer> queue = new ArrayDeque<>();
+		queue.offer(1);
+		visit[1] = true;
+		int move = 0;
 
-		return ans == max ? -1 : ans;
+		while (!queue.isEmpty()) {
+			move++;
+			int loop = queue.size();
+			while (loop-- > 0) {
+				int curr = queue.poll();
+				for (int dice = 1; dice <= 6; dice++) {
+					int next = curr + dice;
+					if (arr[next] != -1)
+						next = arr[next];
+					if (!visit[next]) {
+						visit[next] = true;
+						queue.offer(next);
+					}
+					if (next == extent)
+						return move;
+				}
+			}
+		}
+
+		return -1;
 	}
 
-	protected void dfs(int index, int move) {
-
-		if (index == max || ans < move) {
-			ans = Math.min(ans, move);
-			return;
-		}
-
-		boolean justMove = true;
-
-		for (int step = 6; step > 0; step--) {
-
-			int next = Math.min(index + step, max);
-
-			if (linear[next] == -1 && justMove) {
-				justMove = false;
-				dfs(next, move + 1);
-			}
-
-			if (linear[next] != -1 && linear[next] != 1) {
-				dfs(linear[next], move + 1);
-			}
-		}
-	}
 }
