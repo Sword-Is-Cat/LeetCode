@@ -2,39 +2,43 @@ package Medium.no1061;
 
 class Solution {
 
-	char[] charDic = new char[26];
+	private static final char a = 'a';
 
 	public String smallestEquivalentString(String s1, String s2, String baseStr) {
 
-		for (int i = 0; i < charDic.length; i++)
-			charDic[i] = (char) ('a' + i);
+		UnionFind uf = new UnionFind(26);
+		for (int i = 0; i < s1.length(); i++)
+			uf.set(s1.charAt(i) - a, s2.charAt(i) - a);
 
-		char[] arr1 = s1.toCharArray(), arr2 = s2.toCharArray(), baseArr = baseStr.toCharArray();
-
-		for (int i = 0; i < arr1.length; i++) {
-
-			char rst1 = getChar(arr1[i]), rst2 = getChar(arr2[i]);
-
-			if (rst1 < rst2)
-				setChar(rst2, rst1);
-			else
-				setChar(rst1, rst2);
-
-		}
-
+		char[] baseArr = baseStr.toCharArray();
 		for (int i = 0; i < baseArr.length; i++)
-			baseArr[i] = getChar(baseArr[i]);
+			baseArr[i] = (char) (uf.get(baseArr[i] - a) + a);
 
 		return new String(baseArr);
 	}
+}
 
-	char getChar(char ch) {
-		if (charDic[ch - 'a'] != ch)
-			charDic[ch - 'a'] = getChar(charDic[ch - 'a']);
-		return charDic[ch - 'a'];
+class UnionFind {
+
+	int[] uf;
+
+	UnionFind(int length) {
+		uf = new int[length];
+		for (int i = 0; i < length; i++)
+			uf[i] = i;
 	}
 
-	void setChar(char idx, char val) {
-		charDic[getChar(idx) - 'a'] = val;
+	public void set(int a, int b) {
+		a = get(a);
+		b = get(b);
+		uf[Math.max(a, b)] = Math.min(a, b);
 	}
+
+	public int get(int a) {
+		int rst = uf[a];
+		if (rst != a)
+			uf[a] = get(rst);
+		return uf[a];
+	}
+
 }
