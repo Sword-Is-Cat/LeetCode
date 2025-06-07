@@ -1,5 +1,7 @@
 package Medium.no3170;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 class Solution {
@@ -7,21 +9,21 @@ class Solution {
 
 		char[] arr = s.toCharArray();
 
-		Stack<Integer>[] stacks = new Stack[26];
-		for (int i = 0; i < stacks.length; i++)
-			stacks[i] = new Stack<>();
+		List<Stack<Integer>> stacks = new ArrayList<>();
+		for (int i = 0; i < 26; i++)
+			stacks.add(new Stack<>());
 
 		for (int i = 0; i < arr.length; i++) {
 			char ch = arr[i];
 			if (ch == '*') {
-				for (int j = 0; j < stacks.length; j++) {
-					if (!stacks[j].isEmpty()) {
-						arr[stacks[j].pop()] = '*';
+				for (int j = 0; j < 26; j++) {
+					if (!stacks.get(j).isEmpty()) {
+						arr[stacks.get(j).pop()] = '*';
 						break;
 					}
 				}
 			} else {
-				stacks[ch - 'a'].push(i);
+				stacks.get(ch - 'a').push(i);
 			}
 		}
 
