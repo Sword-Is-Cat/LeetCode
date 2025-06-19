@@ -1,16 +1,21 @@
 package Medium.no2294;
 
-import java.util.Arrays;
-
 class Solution {
 	public int partitionArray(int[] nums, int k) {
 
-		Arrays.sort(nums);
-		int max = nums[0] - 1, answer = 0;
+		boolean[] flags = new boolean[100001];
+		int min = nums[0], max = nums[0];
 		for (int num : nums) {
-			if (max < num) {
+			min = Math.min(min, num);
+			max = Math.max(max, num);
+			flags[num] = true;
+		}
+		int answer = 0;
+
+		for (int i = min; i <= max; i++) {
+			if (flags[i]) {
 				answer++;
-				max = num + k;
+				i += k;
 			}
 		}
 
