@@ -2,10 +2,15 @@ package Medium.no3227;
 
 class Solution {
 	public boolean doesAliceWin(String s) {
-		String vowel = "aeiou";
 		for (char ch : s.toCharArray()) {
-			if (vowel.indexOf(ch) != -1)
+			switch (ch) {
+			case 'a':
+			case 'e':
+			case 'i':
+			case 'o':
+			case 'u':
 				return true;
+			}
 		}
 		return false;
 	}
