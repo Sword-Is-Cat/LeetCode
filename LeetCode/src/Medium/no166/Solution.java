@@ -5,11 +5,14 @@ import java.util.HashMap;
 class Solution {
 	public String fractionToDecimal(int numerator, int denominator) {
 
-		long num = numerator;
-		long den = denominator;
+		if (numerator == 0)
+			return "0";
+
 		StringBuilder sb = new StringBuilder();
-		if ((num < 0) ^ (den < 0))
+		if (numerator < 0 ^ denominator < 0)
 			sb.append("-");
+		long num = Math.abs((long)numerator);
+		long den = Math.abs((long)denominator);
 		sb.append(num / den);
 		num %= den;
 
