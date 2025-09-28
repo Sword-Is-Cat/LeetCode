@@ -4,16 +4,11 @@ import java.util.Arrays;
 
 class Solution {
 	public int largestPerimeter(int[] nums) {
-
 		Arrays.sort(nums);
-
-		for (int idx = nums.length - 3; idx >= 0; idx--) {
-
-			if (nums[idx] + nums[idx + 1] > nums[idx + 2])
-				return nums[idx] + nums[idx + 1] + nums[idx + 2];
-
+		for (int i = nums.length - 1; i > 1; i--) {
+			if (nums[i - 2] + nums[i - 1] > nums[i])
+				return nums[i - 2] + nums[i - 1] + nums[i];
 		}
-
 		return 0;
 	}
 }
