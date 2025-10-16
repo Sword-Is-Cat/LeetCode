@@ -5,9 +5,12 @@ class Solution {
 
 		int[] cnt = new int[value];
 		for (int num : nums) {
-			cnt[(num % value + value) % value]++;
+			int rm = num % value;
+			if (rm < 0)
+				rm += value;
+			cnt[rm]++;
 		}
-		
+
 		int num = 0;
 		while (true) {
 			if (cnt[num % value] == 0)
