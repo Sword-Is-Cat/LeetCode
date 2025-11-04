@@ -1,7 +1,5 @@
 package Easy.no3318;
 
-import java.util.PriorityQueue;
-
 class Solution {
 	public int[] findXSum(int[] nums, int k, int x) {
 
@@ -11,18 +9,12 @@ class Solution {
 
 		int[] cnt = new int[max + 1];
 		int[] ans = new int[nums.length - k + 1];
-		PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> {
-			int comp = b[1] - a[1];
-			if (comp == 0)
-				comp = b[0] - a[0];
-			return comp;
-		});
 
 		for (int i = 0; i < nums.length; i++) {
 
 			cnt[nums[i]]++;
 			if (i >= k - 1) {
-				ans[i - k + 1] = x_sum(queue, cnt, x);
+				ans[i - k + 1] = x_sum(cnt, x);
 				cnt[nums[i - k + 1]]--;
 			}
 		}
@@ -31,15 +23,25 @@ class Solution {
 
 	}
 
-	private int x_sum(PriorityQueue<int[]> queue, int[] cnt, int x) {
+	private int x_sum(int[] cnt, int x) {
 		int rst = 0;
-		queue.clear();
-		for (int i = 0; i < cnt.length; i++)
-			queue.offer(new int[] { i, cnt[i] });
-		while (x-- > 0 && !queue.isEmpty()) {
-			int[] item = queue.poll();
-			rst += item[0] * item[1];
+		int[] temp = cnt.clone();
+		while (x-- > 0) {
+			int maxFreq = 0, val = 0;
+			for (int i = 0; i < temp.length; i++) {
+				if (maxFreq < temp[i]) {
+					maxFreq = temp[i];
+					val = i;
+				} else if (maxFreq == temp[i]) {
+					val = Math.max(val, i);
+				}
+			}
+			rst += maxFreq * val;
+			temp[val] = 0;
+			if (maxFreq == 0)
+				break;
 		}
+
 		return rst;
 	}
 
