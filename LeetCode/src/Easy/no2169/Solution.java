@@ -6,6 +6,6 @@ class Solution {
 			return 0;
 		if (num2 > num1)
 			return countOperations(num2, num1);
-		return num1 / num2 + countOperations(num1 % num2, num2);
+		return num1 / num2 + countOperations(num2, num1 % num2);
 	}
 }
