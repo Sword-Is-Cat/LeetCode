@@ -1,12 +1,17 @@
 package Easy.no717;
 
 class Solution {
-	public boolean isOneBitCharacter(int[] bits) {
-		int idx = 0;
-		while (idx < bits.length - 1) {
-			if (bits[idx++] == 1)
-				idx++;
-		}
-		return idx == bits.length - 1;
-	}
+    public boolean isOneBitCharacter(int[] bits) {
+        for(int i = 0;i<bits.length;i++){
+            if(bits[i]==1){
+                if(i+1 == bits.length){
+                    return false;
+                }
+                i++;
+            }else if(i+1 == bits.length){
+                return true;
+            }
+        }
+        return false;
+    }
 }
