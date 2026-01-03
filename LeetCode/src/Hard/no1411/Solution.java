@@ -5,13 +5,11 @@ class Solution {
 
 		final int MOD = 1_000_000_007;
 
-		long ryr = 6, ryg = 6;
+		long a = 6, b = 6;
 		while (--n > 0) {
-			long newRyr = (3 * ryr + 2 * ryg) % MOD;
-			long newRyg = (2 * ryr + 2 * ryg) % MOD;
-			ryr = newRyr;
-			ryg = newRyg;
+			b = 2 * (a + b) % MOD;
+			a = (a + b) % MOD;
 		}
-		return (int) ((ryr + ryg) % MOD);
+		return (int) ((a + b) % MOD);
 	}
 }
